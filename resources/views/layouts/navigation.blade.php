@@ -15,7 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Início') }}
                     </x-nav-link>
-                </div>
+
+                    <x-nav-link :href="route('posts.index')" :active="request()->routeIs('chirps.index')">
+                        {{ __('Criar Post') }}
+                    </x-nav-link>
+                </div> 
             </div>
 
             <!-- Settings Dropdown -->

@@ -8,8 +8,14 @@
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             >{{ old('message') }}</textarea>
             <x-input-error :messages="$errors->get('message')" class="mt-2" />
-            <x-primary-button class="mt-4">{{ __('Post') }}</x-primary-button>
+            <x-primary-button class="mt-4">{{ __('Publicar') }}</x-primary-button>
+            <select name="type" required>
+                <option selected>{{'Selecione uma linguagem'}}</option>
+                <option value="PHP">{{'PHP'}}</option>
+                <option value="HTML">{{'HTML'}}</option>
+                <option value="CSS">{{'CSS'}}</option>
+                <option value="JAVA">{{'JAVA'}}</option>
+                </select>
         </form>
     </div>
-    
 </x-app-layout>

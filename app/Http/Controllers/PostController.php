@@ -6,7 +6,8 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View; 
+use Illuminate\View\View;
+use App\Models\Type;
 
 class PostController extends Controller
 {
@@ -15,7 +16,8 @@ class PostController extends Controller
      */
     public function index(): View
     {
-        return view('posts.index');
+        $category = Type::all();
+        return view('posts.index', ['category' => $category]);
     }
 
     /**
@@ -35,9 +37,9 @@ class PostController extends Controller
             'message' => 'required|string|max:255',
             'type' => 'required|string',
         ]);
- 
+
         $request->user()->posts()->create($validated);
- 
+
         return redirect(route('posts.index'));
     }
 

@@ -9,13 +9,15 @@
             >{{ old('message') }}</textarea>
             <x-input-error :messages="$errors->get('message')" class="mt-2" />
             <x-primary-button class="mt-4">{{ __('Publicar') }}</x-primary-button>
+
             <select name="type" required>
-                <option selected>{{'Selecione uma linguagem'}}</option>
-                <option value="PHP">{{'PHP'}}</option>
-                <option value="HTML">{{'HTML'}}</option>
-                <option value="CSS">{{'CSS'}}</option>
-                <option value="JAVA">{{'JAVA'}}</option>
+            <option selected>{{'Selecione uma linguagem'}}</option>
+
+            @foreach ($category as $categories)
+                <option value="{{$categories->id}}">{{$categories->name}}</option>
+            @endforeach
                 </select>
+
         </form>
     </div>
 </x-app-layout>

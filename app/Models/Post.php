@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquenta\Relations\Belongsto;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Post extends Model
 {
@@ -14,10 +15,15 @@ class Post extends Model
         'message',
         'type',
     ];
-    
-  /*  public function users():Belongsto
+
+
+    public function types(): BelongsTo
     {
-        return $this->belongsTo(User::class)
+        return $this->belongsTo(Type::class);
     }
-    */
+
+    public function users(): Belongsto
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -13,7 +13,7 @@ class Post extends Model
 
     protected $fillable = [
         'message',
-        'type',
+        'type_id',
     ];
 
 
@@ -22,7 +22,7 @@ class Post extends Model
         return $this->belongsTo(Type::class);
     }
 
-    public function users(): Belongsto
+    public function user(): Belongsto
     {
         return $this->belongsTo(User::class);
     }

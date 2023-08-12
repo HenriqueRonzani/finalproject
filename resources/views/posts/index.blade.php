@@ -10,7 +10,7 @@
             <x-input-error :messages="$errors->get('message')" class="mt-2" />
             <x-primary-button class="mt-4">{{ __('Publicar') }}</x-primary-button>
 
-            <select name="type" required>
+            <select name="type_id" required>
             <option selected>{{'Selecione uma linguagem'}}</option>
 
             @foreach ($category as $categories)

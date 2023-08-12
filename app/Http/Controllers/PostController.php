@@ -34,8 +34,8 @@ class PostController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'message' => 'required|string|max:255',
-            'type' => 'required|string',
+            'message' => 'required|string',
+            'type_id' => 'required|integer',
         ]);
 
         $request->user()->posts()->create($validated);

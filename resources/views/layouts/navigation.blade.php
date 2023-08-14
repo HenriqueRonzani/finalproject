@@ -19,7 +19,7 @@
                     <x-nav-link :href="route('posts.index')" :active="request()->routeIs('chirps.index')">
                         {{ __('Criar Post') }}
                     </x-nav-link>
-                </div> 
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

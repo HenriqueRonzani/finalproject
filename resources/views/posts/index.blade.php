@@ -7,17 +7,22 @@
                 placeholder="{{ __('Digite o seu código') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             >{{ old('message') }}</textarea>
-            <x-input-error :messages="$errors->get('message')" class="mt-2" />
-            <x-primary-button class="mt-4">{{ __('Publicar') }}</x-primary-button>
 
-            <select name="type_id" required>
+            <x-input-error :messages="$errors->get('message')" class="mt-2" />
+
+            <select name="type_id" class="mr-4 text-sm rounded-md focus:border-blue-500 focus:ring-blue-500" required>
             <option selected>{{'Selecione uma linguagem'}}</option>
 
             @foreach ($category as $categories)
-                <option value="{{$categories->id}}">{{$categories->name}}</option>
+                <option class="uppercase" value="{{$categories->id}}">{{$categories->name}}</option>
             @endforeach
                 </select>
 
+
+
+
+            <x-primary-button class="mt-4 ml-4">{{ __('Publicar') }}</x-primary-button>
+            <x-input-error :messages="$errors->get('type_id')" class="mt-2" />
         </form>
     </div>
 </x-app-layout>

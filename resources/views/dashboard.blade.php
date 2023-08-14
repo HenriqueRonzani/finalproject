@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ asset('css/my.css') }}">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -5,6 +6,7 @@
         </h2>
     </x-slot>
 
+<div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
     <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
         @foreach ($posts as $post)
             <div class="p-6 flex space-x-2">
@@ -21,11 +23,16 @@
                     {{--}}
                     <p class="mt-4 text-lg text-gray-900">{{ $post->message }}</p>
                     {{--}}
-                    <x-torchlight-code style="background-color: #000;" language="{{$post->type_id}}">
-                        {{ $post->message}}
-                    </x-torchlight-code>
+                    <div class="my-4 rounded overflow-x-auto block py-4 min-w-max px-4 mr-4">
+                        <pre>
+                            <x-torchlight-code language="{{$post->type_id}}">
+                                {{ $post->message}}
+                            </x-torchlight-code>
+                        </pre>
+                    </div>
                 </div>
             </div>
         @endforeach
     </div>
+</div>
 </x-app-layout>

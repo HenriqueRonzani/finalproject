@@ -35,7 +35,7 @@ class PostController extends Controller
     {
         $validated = $request->validate([
             'message' => 'required|string',
-            'type_id' => 'required|integer',
+            'type_id' => 'required|integer|exists:types,id',
         ]);
 
         $request->user()->posts()->create($validated);

@@ -34,6 +34,7 @@ class PostController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
+            'title' => 'required|string|max:30',
             'message' => 'required|string',
             'type_id' => 'required|integer|exists:types,id',
         ]);

@@ -14,10 +14,11 @@ class Post extends Model
     protected $fillable = [
         'message',
         'type_id',
+        'title',
     ];
 
 
-    public function types(): BelongsTo
+    public function type(): BelongsTo
     {
         return $this->belongsTo(Type::class);
     }

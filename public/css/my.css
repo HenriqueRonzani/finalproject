@@ -12,6 +12,7 @@ pre code.torchlight {
     min-width: max-content;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    border-radius: 15px;
 }
 
 pre code.torchlight .line {

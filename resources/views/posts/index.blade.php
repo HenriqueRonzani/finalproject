@@ -1,9 +1,15 @@
 <x-app-layout>
+        <x-slot name="header">
+            <h2 class="text-center font-semibold text-2xl text-gray-800 leading-tight">
+                {{ __('Criar Posts') }}
+            </h2>
+        </x-slot>
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         <form method="POST" action="{{ route('posts.store') }}">
             @csrf
 
-            <p class="text-xl font-bold mb-2"> {{'Criar Post'}} </p>
+
+
             <x-text-input name="title" class="block mt-1 w-full mb-2" placeholder="Digite sua dúvida, informação ou contribuição" required />
             <x-input-error :messages="$errors->get('title')" class="mb-3" />
 

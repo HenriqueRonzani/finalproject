@@ -29,6 +29,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 */
+
 Route::get('/', [DashboardController::class, 'dashboard'])
     ->middleware(['auth', 'verified']);
 
@@ -46,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 Route::resource('comments', CommentController::class)
-    ->only(['index'])
+    ->only(['index','store'])
     ->middleware(['auth', 'verified']);
 });
 

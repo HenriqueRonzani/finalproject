@@ -34,7 +34,7 @@
                             </x-torchlight-code>
                         </pre>
 
-                            <a href="{{route('comments.index')}}">
+                            <a href="{{ route('comments.index', ['post' => $post->id])}}">
                             <img src="{{ asset('img/comment.png')}}">
                             </a>
 

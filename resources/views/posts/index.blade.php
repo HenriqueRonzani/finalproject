@@ -4,7 +4,7 @@
                 {{ __('Criar Posts') }}
             </h2>
         </x-slot>
-    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
         <form method="POST" action="{{ route('posts.store') }}">
             @csrf
 
@@ -33,6 +33,7 @@
                     </select>
 
                 <x-primary-button class="mt-4 ml-4 h-10" >{{ __('Publicar') }}</x-primary-button>
+
             </div>
             <div class="flex items-start justify-end">
                 <x-input-error :messages="$errors->get('type_id')" class="mt-2" />

@@ -9,7 +9,7 @@
     </x-slot>
 
 
-    <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8" >
+    <div class="max-w-6xl mx-auto p-3 sm:px-6 lg:px-8">
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
             <div class="p-6 flex space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -27,20 +27,38 @@
 
                     <p class="text-gray-800 text-2xl">{{ $post->title }}</p>
 
-                    <pre class=" text-sm overflow-auto max-w-5xl">
+                    <pre class="min-w-0 text-sm overflow-auto max-w-5xl">
                         <x-torchlight-code language="{{$post->type->name}}">
                             {!! $post->message !!}
                         </x-torchlight-code>
                     </pre>
 
-                    <a href="{{route('comments.store', ['post' => $post])}}">
-                    <h2 class="hover:text-gray-800 mt-2 block text-center text-xl text-gray-500 leading-tight">
-                        {{ __('Comentar') }}
-                    </h2>
+
 
                 </div>
 
             </div>
+
+
+                <form method="POST" action="{{ route('comments.store', ['post' => $post->id]) }}">
+
+                    @csrf
+                    <p class="py-4 text-gray-800 text-3xl text-center">
+                        {{ __('Adicionar Comentário')}}
+                    </p>
+
+                    <textarea
+                    rows="5"
+                    name="message"
+                    placeholder="{{ __('Digite seu comentário') }}"
+                    class=" mx-auto block w-3/4 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    >{{ old('message') }}</textarea>
+
+                    <x-input-error :messages="$errors->get('message')" class="mt-2" />
+
+                <div class="flex justify-center">
+                <x-primary-button class=" mx-auto my-4 h-10" >{{ __('Publicar') }}</x-primary-button>
+                </div>
 
 
         </div>
@@ -49,8 +67,8 @@
 
     @foreach ($post->comment as $comments)
 
-    <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8" >
-        <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
+    <div class="max-w-6xl mx-auto py-1 sm:px-6 lg:px-8" >
+        <div class=" bg-white shadow-sm rounded-lg divide-y">
             <div class="p-6 flex space-x-2">
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -66,10 +84,11 @@
 
                         </div>
                     </div>
+                    <p class="mt-4 text-lg text-gray-900">{{ $comments->message }}</p>
                 </div>
             </div>
         </div>
     </div>
 
-    ;@endforeach
+    @endforeach
 </x-app-layout>

@@ -11,13 +11,18 @@ class Comment extends Model
     use HasFactory;
 
 
+    protected $fillable = [
+        'message',
+        'post_id',
+    ];
     public function user(): BelongsTo
     {
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(User::class);
     }
 
     public function post(): Belongsto
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Post::class);
     }
+
 }

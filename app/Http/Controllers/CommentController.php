@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class CommentController extends Controller
@@ -16,6 +18,7 @@ class CommentController extends Controller
     {
         $postId = $request->get('post');
         $post = Post::find($postId);
+
 
         return view('comments.index', [
             'post' => $post,
@@ -33,9 +36,20 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $postId = $request->get('post');
+        $validated = $request->validate([
+            'message' => 'required|string|max:255',
+        ]);
+
+        $request->user()->comments()->create([
+            'message' => $validated['message'],
+            'post_id' => $postId
+        ]);
+
+
+        return redirect(route('comments.index', ['post' => $postId]));
     }
 
     /**

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Like;
+use Illuminate\Http\Request;
 
 class Post extends Model
 {
@@ -38,5 +38,12 @@ class Post extends Model
     public function likes(): HasMany
     {
         return $this->hasmany(Like::class);
+    }
+
+    public function hasLiked(Post $postid): bool
+    {
+        $user = auth()->user();
+
+        return $user->likes->contains('post_id', $postid->id);
     }
 }

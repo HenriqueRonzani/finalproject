@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="{{ asset('css/my.css') }}">
 
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-center font-semibold text-2xl text-gray-800 leading-tight">
@@ -34,12 +35,33 @@
                             </x-torchlight-code>
                         </pre>
 
-                            <a href="{{ route('comments.index', ['post' => $post->id])}}">
-                            <img src="{{ asset('img/comment.png')}}">
+                        <div class="flex justify-start">
+
+
+                            <form method="get" class="flex justify-start" action= "{{ route('like.toggle', ['post' => $post])}}">
+
+                            @if ($post->hasLiked($post))
+
+                            <button type="submit">
+                                <img class="mx-2 w-7" src="{{ asset('img/liked.png') }}">
+                            </button>
+
+                            @else
+
+                            <button type="submit">
+                                <img class="mx-2 w-7" src="{{ asset('img/not-liked.png') }}">
+                            </button>
+
+                            @endif
+
+                            </form>
+
+                            <a href="{{ route('comments.index', ['posts' => $post->id])}}">
+                                <img class="mx-2 w-7" src="{{ asset('img/comment.png')}}">
                             </a>
 
+                        </div>
                     </div>
-
                 </div>
             @endforeach
         </div>

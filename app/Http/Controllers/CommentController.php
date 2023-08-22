@@ -16,12 +16,12 @@ class CommentController extends Controller
      */
     public function index(Request $request): View
     {
-        $postId = $request->get('post');
+        $postId = $request->get('posts');
         $post = Post::find($postId);
 
 
         return view('comments.index', [
-            'post' => $post,
+            'posts' => $post,
         ]);
     }
 
@@ -49,7 +49,9 @@ class CommentController extends Controller
         ]);
 
 
-        return redirect(route('comments.index', ['post' => $postId]));
+        return redirect(route('comments.index', [
+            'posts' => $postId
+        ]));
     }
 
     /**

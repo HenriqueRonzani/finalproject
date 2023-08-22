@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
@@ -49,6 +50,9 @@ Route::middleware('auth')->group(function () {
 Route::resource('comments', CommentController::class)
     ->only(['index','store'])
     ->middleware(['auth', 'verified']);
+
+Route::get('/like/{post}', [LikeController::class, 'likeToggle'])->name('like.toggle');
+
 });
 
 require __DIR__.'/auth.php';

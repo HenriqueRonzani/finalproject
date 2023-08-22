@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/my.css') }}">
 
+
+
 <x-app-layout>
 
     <x-slot name="header">
@@ -20,19 +22,40 @@
 
                     <div class="flex justify-between items-center">
                         <div>
-                            <span class="text-gray-800">{{ $post->user->name }}</span>
-                            <small class="ml-2 text-sm text-gray-600">{{ $post->created_at->format('d/m/y, H:i') }}</small>
+                            <span class="text-gray-800">{{ $posts->user->name }}</span>
+                            <small class="ml-2 text-sm text-gray-600">{{ $posts->created_at->format('d/m/y, H:i') }}</small>
                         </div>
                     </div>
 
-                    <p class="text-gray-800 text-2xl">{{ $post->title }}</p>
+                    <p class="text-gray-800 text-2xl">{{ $posts->title }}</p>
 
                     <pre class="min-w-0 text-sm overflow-auto max-w-5xl">
-                        <x-torchlight-code language="{{$post->type->name}}">
-                            {!! $post->message !!}
+                        <x-torchlight-code language="{{$posts->type->name}}">
+                            {!! $posts->message !!}
                         </x-torchlight-code>
                     </pre>
 
+                    <div class="flex justify-start">
+
+
+                        <form method="get" class="flex justify-start" action= "{{ route('like.toggle', ['post' => $posts])}}">
+
+                            @if ($posts->hasLiked($posts))
+
+                            <button type="submit">
+                                <img class="mx-2 w-7" src="{{ asset('img/liked.png') }}">
+                            </button>
+
+                            @else
+
+                            <button type="submit">
+                                <img class="mx-2 w-7" src="{{ asset('img/not-liked.png') }}">
+                            </button>
+
+                            @endif
+
+                        </form>
+                    </div>
 
 
                 </div>
@@ -40,7 +63,7 @@
             </div>
 
 
-                <form method="POST" action="{{ route('comments.store', ['post' => $post->id]) }}">
+                <form method="POST" action="{{ route('comments.store', ['post' => $posts->id]) }}">
 
                     @csrf
                     <p class="py-4 text-gray-800 text-3xl text-center">
@@ -65,9 +88,9 @@
     </div>
 
 
-    @foreach ($post->comment as $comments)
+    @foreach ($posts->comment as $comments)
 
-    <div class="max-w-6xl mx-auto py-1 sm:px-6 lg:px-8" >
+    <div class="max-w-6xl mx-auto pb-4 sm:px-6 lg:px-8" >
         <div class=" bg-white shadow-sm rounded-lg divide-y">
             <div class="p-6 flex space-x-2">
 

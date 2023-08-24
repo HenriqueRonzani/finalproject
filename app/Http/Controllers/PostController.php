@@ -57,17 +57,34 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Post $post):View
     {
-        //
+        $this->authorize('update', $post);
+
+        $category = Type::all();
+
+        return view('posts.edit', [
+            'post' => $post,
+            'category' => $category,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post): RedirectResponse
     {
-        //
+        $this->authorize('update', $post);
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:30',
+            'message' => 'required|string',
+            'type_id' => 'required|integer|exists:types,id',
+        ]);
+
+        $post->update($validated);
+
+        return redirect(route('dashboard'));
     }
 
     /**

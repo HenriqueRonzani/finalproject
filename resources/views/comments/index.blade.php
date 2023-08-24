@@ -1,7 +1,5 @@
 <link rel="stylesheet" href="{{ asset('css/my.css') }}">
 
-
-
 <x-app-layout>
 
     <x-slot name="header">

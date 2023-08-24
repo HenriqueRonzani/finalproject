@@ -16,19 +16,6 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-        [
-            'posts' => Post::with('user')->latest()->get(),
-        ]);
-
-*/
-
-/*Route::get('/', function () {
-    return (['dashboard', Controller::class]);
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 */
 
 Route::get('/', [DashboardController::class, 'dashboard'])
@@ -39,7 +26,7 @@ Route::get('dashboard', [DashboardController::class, 'dashboard'])
     ->name('dashboard');
 
 Route::resource('posts', PostController::class)
-    ->only(['index', 'store'])
+    ->only(['index', 'store', 'edit', 'update'])
     ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {

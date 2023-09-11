@@ -1,6 +1,6 @@
 
 <x-app-layout>
-    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
         <form method="POST" action="{{ route('posts.update', $post) }}">
             @csrf
             @method('patch')
@@ -8,7 +8,7 @@
             <x-input-error :messages="$errors->get('title')" class="mb-3" />
 
             <textarea
-                rows="7"
+                rows="15"
                 name="message"
                 placeholder="{{ __('Digite o seu código') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
@@ -32,7 +32,7 @@
             <div class="flex items-start justify-end">
                 <x-input-error :messages="$errors->get('type_id')" class="mt-2" />
                 <div class="text-gray-800 mt-2 mr-4">
-                    <a href="{{ route('posts.index',$post) }}">{{ __('Cancelar') }}</a>
+                    <a href="{{ route('dashboard',$post) }}">{{ __('Cancelar') }}</a>
                 </div>
             </div>
         </form>

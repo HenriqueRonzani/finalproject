@@ -39,19 +39,34 @@
                                     <x-dropdown-link :href="route('posts.edit', $post)">
                                         {{ __('Edit') }}
                                     </x-dropdown-link>
+
+                                    <form method="POST" action="{{ route('posts.destroy', $post) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <x-dropdown-link :href="route('posts.destroy', $post)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                {{ __('Delete') }}
+                                        </x-dropdown-link>
+                                    </form>
+
                                 </x-slot>
+                            
                             </x-dropdown>
+
                             @endif
 
                         </div>
 
                         <p class="text-gray-800 text-2xl">{{ $post->title }}</p>
 
+                        {{--
                         <pre class=" text-sm overflow-auto max-w-5xl">
                             <x-torchlight-code language="{{$post->type->name}}">
                                 {!! $post->message !!}
                             </x-torchlight-code>
                         </pre>
+                        --}}
+
+                        <p> {!! $post->message !!} </p>
 
                         <div class="flex justify-start">
 
@@ -60,7 +75,7 @@
 
                             @if ($post->hasLiked($post))
 
-                            <button type="submit">
+                            <button class="mt-" type="submit">
                                 <img class="mx-2 w-7" src="{{ asset('img/liked.png') }}">
                             </button>
 

@@ -26,7 +26,7 @@ Route::get('dashboard', [DashboardController::class, 'dashboard'])
     ->name('dashboard');
 
 Route::resource('posts', PostController::class)
-    ->only(['index', 'store', 'edit', 'update'])
+    ->only(['index', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 Route::resource('comments', CommentController::class)
-    ->only(['index','store'])
+    ->only(['index','store','edit','destroy'])
     ->middleware(['auth', 'verified']);
 
 Route::get('/like/{post}', [LikeController::class, 'likeToggle'])->name('like.toggle');

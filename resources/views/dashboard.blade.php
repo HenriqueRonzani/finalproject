@@ -58,28 +58,30 @@
 
                         <p class="text-gray-800 text-2xl">{{ $post->title }}</p>
 
-                        {{--
                         <pre class=" text-sm overflow-auto max-w-5xl">
                             <x-torchlight-code language="{{$post->type->name}}">
                                 {!! $post->message !!}
                             </x-torchlight-code>
                         </pre>
-                        --}}
-
-                        <p> {!! $post->message !!} </p>
-
-                        <div class="flex justify-start">
 
 
-                            <form method="get" class="flex justify-start" action= "{{ route('like.toggle', ['post' => $post])}}">
+                        <div class="flex justify-start mt-5">
+
+
+                            <form method="post" class="flex justify-start" action= "{{ route('like.toggle', $post )}}">
+                            @csrf
 
                             @if ($post->hasLiked($post))
 
-                            <button class="mt-" type="submit">
+                            <input type=hidden name="liked" value="true">
+                            
+                            <button type="submit">
                                 <img class="mx-2 w-7" src="{{ asset('img/liked.png') }}">
                             </button>
 
                             @else
+
+                            <input type=hidden name="liked" value="false">
 
                             <button type="submit">
                                 <img class="mx-2 w-7" src="{{ asset('img/not-liked.png') }}">
@@ -89,7 +91,7 @@
 
                             </form>
 
-                            <a href="{{ route('comments.index', ['posts' => $post->id])}}">
+                            <a href="{{ route('comments.index', ['post' => $post])}}">
                                 <img class="mx-2 w-7" src="{{ asset('img/comment.png')}}">
                             </a>
 

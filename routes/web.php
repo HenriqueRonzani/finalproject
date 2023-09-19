@@ -35,10 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 Route::resource('comments', CommentController::class)
-    ->only(['index','store','edit','destroy'])
+    ->only(['index','store','edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-Route::get('/like/{post}', [LikeController::class, 'likeToggle'])->name('like.toggle');
+Route::post('/like/liketoggle/{post}', [LikeController::class, 'likeToggle'])
+    ->name('like.toggle')
+    ->middleware(['auth', 'verified']);
 
 });
 

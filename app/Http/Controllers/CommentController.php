@@ -16,12 +16,11 @@ class CommentController extends Controller
      */
     public function index(Request $request): View
     {
-        $postId = $request->get('posts');
-        $post = Post::find($postId);
-
-
+        $post = $request->get('post');
+        $post = Post::find($post);
+        
         return view('comments.index', [
-            'posts' => $post,
+            'post' => $post,
         ]);
     }
 
@@ -38,19 +37,21 @@ class CommentController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $postId = $request->get('post');
+        $post = $request->get('post');
+        $post = Post::find($post);
+
         $validated = $request->validate([
             'message' => 'required|string|max:255',
         ]);
 
         $request->user()->comments()->create([
             'message' => $validated['message'],
-            'post_id' => $postId
+            'post_id' => $post->id
         ]);
 
 
         return redirect(route('comments.index', [
-            'posts' => $postId
+            'post' => $post
         ]));
     }
 

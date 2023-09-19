@@ -11,16 +11,17 @@ class LikeController extends Controller
     public function likeToggle(Request $request, Post $post)
     {
         $user = $request->user();
-
-        if ($post->hasLiked($post)){
+        $liked = $request->input('liked');
+    
+        if($liked == 'true'){
             $like = $user->likes->where('post_id', $post->id);
             $like->each(function ($item) {
-                $item->delete();
-            });
+            $item->delete();
+            });     
         } else{
             $user->likes()->create(['post_id' => $post->id]);
         }
-
-        return redirect()->route('dashboard', ['posts' => $post]);
+       
+        return back();
     }
 }

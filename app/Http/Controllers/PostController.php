@@ -43,7 +43,7 @@ class PostController extends Controller
 
         $request->user()->posts()->create($validated);
 
-        return redirect(route('posts.index'));
+        return redirect(route('dashboard'));
     }
 
     /**

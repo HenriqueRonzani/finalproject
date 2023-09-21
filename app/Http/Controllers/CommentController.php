@@ -18,9 +18,11 @@ class CommentController extends Controller
     {
         $post = $request->get('post');
         $post = Post::find($post);
-        
+        $comment = Comment::where('post_id', $post->id)->latest()->get();
+
         return view('comments.index', [
             'post' => $post,
+            'comments' => $comment,
         ]);
     }
 
@@ -66,9 +68,14 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Comment $comment)
+    public function edit(Comment $comment): View
     {
-        //
+        $this->authorize('update', $comment);
+
+        return view('comments.edit',[
+            'comment' => $comment
+        ]);
+        
     }
 
     /**
@@ -76,14 +83,35 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        $this->authorize('update', $comment);
+
+        $validated = $request->validate([
+            'message' => 'required|string|max:255'
+        ]);
+
+        $comment->update($validated);
+
+        $post = $comment->post;
+        
+        return redirect(route('comments.index', [
+            'post' => $post
+        ]));
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Comment $comment)
     {
-        //
+        $this->authorize('delete', $comment);
+
+        $comment->delete();
+
+        $post = $comment->post;
+        
+        return redirect(route('comments.index', [
+            'post' => $post
+        ]));
     }
 }

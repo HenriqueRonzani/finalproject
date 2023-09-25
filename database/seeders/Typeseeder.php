@@ -14,11 +14,12 @@ class Typeseeder extends Seeder
     public function run(): void
     {
         $types = [
-            ['name' => 'php'],
-            ['name' => 'html'],
-            ['name' => 'java'],
-            ['name' => 'css'],
-            ['name' => 'javascript'],
+            ['name' => 'POST SEM CÓDIGO', 'value' => 'SC'],
+            ['name' => 'PHP', 'value' => 'php'],
+            ['name' => 'HTML', 'value' => 'html'],
+            ['name' => 'JAVA', 'value' => 'java'],
+            ['name' => 'CSS', 'value' => 'css'],
+            ['name' => 'JAVASCRIPT', 'value' => 'javascript'],
         ];
 
         DB::table('types')->insert($types);

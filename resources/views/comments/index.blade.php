@@ -65,11 +65,15 @@
 
                     <p class="text-gray-800 text-2xl">{{ $post->title }}</p>
 
-                    <pre class="min-w-0 text-sm overflow-auto max-w-5xl">
-                        <x-torchlight-code language="{{$post->type->name}}">
-                            {!! $post->message !!}
-                        </x-torchlight-code>
-                    </pre>
+                    @if($post->type->value == "SC")
+                        <p class="my-6">{!! $post->message !!}</p>
+                    @else
+                        <pre class=" text-sm overflow-auto max-w-5xl">
+                            <x-torchlight-code language="{{$post->type->name}}">
+                                {!! $post->message !!}
+                            </x-torchlight-code>
+                        </pre>
+                    @endif
 
 
                     <div class="flex justify-start">

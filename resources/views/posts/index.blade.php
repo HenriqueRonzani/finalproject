@@ -14,7 +14,7 @@
             <textarea
                 rows="15"
                 name="message"
-                placeholder="{{ __('Digite o seu código') }}"
+                placeholder="{{ __('Digite o seu código ou dúvida') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             >{{ old('message') }}</textarea>
 
@@ -23,16 +23,22 @@
             <div class="flex items-start justify-end">
 
                 <select name="type_id" class="mt-4 text-sm rounded-md focus:border-blue-500 focus:ring-blue-500 h-10" required>
-                <option selected>{{'Selecione uma linguagem'}}</option>
 
                 @foreach ($category as $categories)
+             
+                @if ($categories->value == 'SC')
+                    <option selected class="uppercase" value="{{$categories->id}}">{{$categories->name}}</option>
+                @else
                     <option class="uppercase" value="{{$categories->id}}">{{$categories->name}}</option>
+                @endif
+
                 @endforeach
                     </select>
 
                 <x-primary-button class="mt-4 ml-4 h-10" >{{ __('Publicar') }}</x-primary-button>
 
             </div>
+
             <div class="flex items-start justify-end">
                 <x-input-error :messages="$errors->get('type_id')" class="mt-2" />
             </div>

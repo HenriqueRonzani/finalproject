@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AtividadeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
@@ -43,5 +44,17 @@ Route::post('/like/liketoggle/{post}', [LikeController::class, 'likeToggle'])
     ->middleware(['auth', 'verified']);
 
 });
+
+Route::get('/atividades/posts', [AtividadeController::class, 'posts'])
+    ->name('atividades.posts')
+    ->middleware(['auth','verified']);
+
+Route::get('/atividades/likes', [AtividadeController::class, 'likes'])
+    ->name('atividades.likes')
+    ->middleware(['auth','verified']);
+
+Route::get('/atividades/comments', [AtividadeController::class, 'comments'])
+    ->name('atividades.comments')
+    ->middleware(['auth','verified']);
 
 require __DIR__.'/auth.php';

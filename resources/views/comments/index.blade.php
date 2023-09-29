@@ -5,7 +5,7 @@
 
     <x-slot name="header">
         <div class="flex space-x-10">
-            <a href="{{ route('dashboard')}}">
+            <a href="{{ url()->previous() }}">
             <img class="h-6" src="{{ asset('img/arrow.png') }}">
             </a>
             <h2 class=" text-center font-semibold text-2xl text-gray-800 leading-tight">
@@ -15,7 +15,8 @@
     </x-slot>
 
 
-    <div class="max-w-6xl mx-auto p-3 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
             <div class="p-6 flex space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -68,6 +69,7 @@
                     @if($post->type->value == "SC")
                         <p class="my-6">{!! $post->message !!}</p>
                     @else
+
                         <pre class=" text-sm overflow-auto max-w-5xl">
                             <x-torchlight-code language="{{$post->type->name}}">
                                 {!! $post->message !!}
@@ -136,7 +138,7 @@
 
     @foreach ($comments as $comment)
 
-    <div class="max-w-6xl mx-auto pb-4 sm:px-6 lg:px-8" >
+    <div class="max-w-7xl mx-auto pb-4 sm:px-6 lg:px-8" >
         <div class=" bg-white shadow-sm rounded-lg divide-y">
             <div class="p-6 flex space-x-2">
 

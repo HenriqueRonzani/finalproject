@@ -1,17 +1,38 @@
 <link rel="stylesheet" href="{{ asset('css/my.css') }}">
 
-
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-center font-semibold text-2xl text-gray-800 leading-tight">
-            {{ __('Posts') }}
+        <h2 class="text-center font-semibold text-xl text-gray-800 leading-tight">
+           {{ __('Perfil de ') }} {!!$user->name!!}
         </h2>
     </x-slot>
 
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+
+                    <header>
+                        <h2 class="text-lg font-medium text-gray-900">
+                            {{ __('Informações do Usuário')}}
+                        </h2>
+                    </header>
+
+                    <div class="mt-6 space-y-6">
+                        <div>
+                            <h2 class="text-lg text-gray-950 font-bold">{{__('Nome')}} </h2>
+                            <h2 class="text-base">{!! $user->name !!}<h2/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
-            @foreach ($posts as $post)
+            @foreach ($user->posts as $post)
             
           
                 <div class="p-6 flex space-x-2">
@@ -121,6 +142,5 @@
             @endforeach
         </div>
     </div>
-
-
+    
 </x-app-layout>

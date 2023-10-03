@@ -6,7 +6,7 @@
     <x-slot name="header">
         <div class="flex space-x-10">
             <a href="{{ url()->previous() }}">
-            <img class="h-6" src="{{ asset('img/arrow.png') }}">
+                <img class="h-6" src="{{ asset('img/arrow.png') }}">
             </a>
             <h2 class=" text-center font-semibold text-2xl text-gray-800 leading-tight">
                 {{ __('Comentários') }}

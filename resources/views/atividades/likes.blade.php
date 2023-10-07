@@ -13,10 +13,26 @@
             
           
                 <div class="p-6 flex space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                    </svg>
+                    @php
+                        $extensions = ['png', 'jpg', 'jpeg'];
+                        $file = null;
 
+                        foreach ($extensions as $ext) {
+                            $filePath = storage_path("app/public/profilepicture/") . $post->user->id . ".$ext";
+
+                            if (file_exists($filePath)) {
+                                $file = "storage/profilepicture/" . $post->user->id . ".$ext";
+                                break;
+                            }
+                        }
+                    @endphp
+                  
+
+                    @if (isset($file))
+                        <img class="h-10 w-10 rounded-md" src=" {{ asset($file) }}">
+                    @else
+                        <img class="h-10 w-10" src=" {{ asset("img/no-image.svg")}}">
+                    @endif
                     <div class="flex-1">
                         <div class="flex justify-between items-center">
                             <div>
@@ -81,7 +97,7 @@
                             <input type=hidden name="liked" value="true">
                             
                             <button type="submit">
-                                <img class="mx-2 w-7" src="{{ asset('img/liked.png') }}">
+                                <img class="mx-2 w-7" src="{{ asset('img/liked.svg') }}">
                             </button>
 
                             @else
@@ -89,7 +105,7 @@
                             <input type=hidden name="liked" value="false">
 
                             <button type="submit">
-                                <img class="mx-2 w-7" src="{{ asset('img/not-liked.png') }}">
+                                <img class="mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
                             </button>
 
                             @endif
@@ -99,7 +115,7 @@
                             <p> {!! count($post->likes) !!} </p>
 
                             <a href="{{ route('comments.index', ['post' => $post])}}">
-                                <img class="mx-2 w-7" src="{{ asset('img/comment.png')}}">
+                                <img class="mx-2 w-7" src="{{ asset('img/comment.svg')}}">
                             
                             </a>
 

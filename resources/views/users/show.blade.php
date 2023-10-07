@@ -24,6 +24,36 @@
                             <h2 class="text-base">{!! $user->name !!}<h2/>
                         </div>
                     </div>
+                    @php
+                    $extensions = ['png', 'jpg', 'jpeg'];
+                    $file = null;
+            
+                    foreach ($extensions as $ext) {
+                        $filePath = storage_path("app/public/profilepicture/") . $user->id . ".$ext";
+            
+                        if (file_exists($filePath)) {
+                            $file = "storage/profilepicture/" . $user->id . ".$ext";
+                            break;
+                        }
+                    }
+                @endphp
+            
+                <div class="my-2 py-3 border-y-2">
+                    <header>
+                        <h2 class="text-lg font-medium text-gray-900">
+                            {{ __('Foto de Perfil') }}
+                        </h2>
+                
+                        <p class="my-1 text-sm text-gray-600">
+                            {{ __("Envie uma imagem em .jpg, .jpeg ou .png para alterar a foto de perfil") }}
+                        </p>
+                    </header>
+            
+                    @if (isset($file))
+                            <img class="mt-5" height="200x" width="200px" src=" {{ asset($file) }}">
+                    @else
+                            <img class="my-5" height="200px" width="200px" src=" {{ asset("img/no-image.svg")}}">
+                    @endif
                 </div>
             </div>
         </div>
@@ -32,6 +62,15 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
+
+            <div class="p-6 flex space-x-2">
+                <header>
+                    <h2 class="text-lg font-medium text-gray-900">
+                        {{ __('Posts do Usuário')}}
+                    </h2>
+                </header> 
+            </div>
+
             @foreach ($user->posts as $post)
             
           
@@ -112,7 +151,7 @@
                             <input type=hidden name="liked" value="true">
                             
                             <button type="submit">
-                                <img class="mx-2 w-7" src="{{ asset('img/liked.png') }}">
+                                <img class="mx-2 w-7" src="{{ asset('img/liked.svg') }}">
                             </button>
 
                             @else
@@ -120,7 +159,7 @@
                             <input type=hidden name="liked" value="false">
 
                             <button type="submit">
-                                <img class="mx-2 w-7" src="{{ asset('img/not-liked.png') }}">
+                                <img class="mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
                             </button>
 
                             @endif
@@ -130,7 +169,7 @@
                             <p> {!! count($post->likes) !!} </p>
 
                             <a href="{{ route('comments.index', ['post' => $post])}}">
-                                <img class="mx-2 w-7" src="{{ asset('img/comment.png')}}">
+                                <img class="mx-2 w-7" src="{{ asset('img/comment.svg')}}">
                             
                             </a>
 

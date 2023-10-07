@@ -1,19 +1,66 @@
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
+    <header class="mb-2">
+        <h2 class="text-2xl font-medium text-gray-900">
             {{ __('Informações do Perfil') }}
         </h2>
-
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __("Atualize as informações do perfil e e-mail.") }}
-        </p>
     </header>
 
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>
+    
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    @php
+        $extensions = ['png', 'jpg', 'jpeg'];
+        $file = null;
+
+        foreach ($extensions as $ext) {
+            $filePath = storage_path("app/public/profilepicture/") . auth()->user()->id . ".$ext";
+
+            if (file_exists($filePath)) {
+                $file = "storage/profilepicture/" . auth()->user()->id . ".$ext";
+                break;
+            }
+        }
+    @endphp
+
+    <div class="py-5 border-y-2">
+        <header>
+            <h2 class="text-lg font-medium text-gray-900">
+                {{ __('Foto de Perfil') }}
+            </h2>
+    
+            <p class="mt-1 text-sm text-gray-600">
+                {{ __("Envie uma imagem em .jpg, .jpeg ou .png para alterar a foto de perfil") }}
+            </p>
+        </header>
+
+        @if (isset($file))
+                <img class="mt-5" height="200x" width="200px" src=" {{ asset($file) }}">
+               
+                <a href="{{ route('profile.picdelete') }}">
+                    <button class="inline-flex items-center border border-transparent rounded-md font-semibold text-sm text-gray-700 uppercase tracking-widest hover:text-gray-900 active:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 mb-3">
+                        {{ __('Deletar Imagem')}}
+                    </button>
+                </a>
+        @else
+                <img class="my-5" height="200px" width="200px" src=" {{ asset("img/no-image.svg")}}">
+        @endif
+       
+        
+
+        <form method="post" enctype="multipart/form-data" action="{{ route('profile.picture') }}" class="mt-3 space-y-6">
+            @csrf
+            <label for="arquivo">Enviar imagem</label>
+
+            <input class="block " type="file" name="picture" id="picture" accept=".png,.jpg,.jpeg" required>
+
+            <x-primary-button>{{ __('Enviar') }}</x-primary-button>
+        </form>
+
+    </div>
+
+    <form method="post" action="{{ route('profile.update') }}" class="mt-2 space-y-6">
         @csrf
         @method('patch')
 

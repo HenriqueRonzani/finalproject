@@ -37,6 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); 
 });
 
+Route::post('profile/picture', [ProfileController::class, 'picture'])
+    ->name('profile.picture')
+    ->middleware(['auth', 'verified']);
+
+Route::get('profile/picturedelete', [ProfileController::class, 'picdelete'])
+    ->name('profile.picdelete')
+    ->middleware(['auth', 'verified']);
+
 Route::get('user/{user}', [UserController::class, 'show'])
     ->name('user.show')
     ->middleware(['auth', 'verified']);

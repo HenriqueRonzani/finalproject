@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -42,6 +43,8 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $this->picdelete();
+        
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
         ]);
@@ -57,4 +60,39 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function picture(Request $request)
+    {
+        $this->delete();
+        
+        $extension = $request->file('picture')->getClientOriginalExtension();
+
+        $name = auth()->user()->id . '.' . $extension;
+
+        $request->file('picture')->move(storage_path("app/public/profilepicture"), $name);
+
+        return back();
+    }
+
+    public function picdelete()
+    {
+        $this->delete();
+        return back();
+    }
+
+    private function delete()
+    {
+        $extensions = ['png', 'jpg', 'jpeg'];
+
+        foreach ($extensions as $ext) {
+            $filePath = "public/profilepicture/" . auth()->user()->id . ".$ext";
+
+            if (Storage::exists($filePath)) {
+                Storage::delete($filePath);
+                break;
+                
+            }
+        } 
+    }
+
 }

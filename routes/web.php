@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AtividadeController;
+use App\Http\Controllers\DirectMessage;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
@@ -19,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::resource('directmessage', DirectMessage::class)
+    ->only(['index'])
+    ->middleware(['auth', 'verified']);
 
 Route::get('/', [DashboardController::class, 'dashboard'])
     ->middleware(['auth', 'verified']);

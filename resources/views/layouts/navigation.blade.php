@@ -25,6 +25,10 @@
                     <x-nav-link :href="route('atividades.posts')" :active="request()->routeIs('atividades.posts','atividades.likes','atividades.comments')">
                         {{ __('Atividade') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('directmessage.index')" :active="request()->routeIs('directmessage.index')">
+                        {{ __('Mensagem Direta') }}
+                    </x-nav-link>   
                 </div>
             </div>
 
@@ -58,7 +62,7 @@
                             @if (isset($file))
                                 <img class="h-10 w-10 rounded-md mx-1" src=" {{ asset($file) }}">
                             @else
-                                <img class="h-10 w-10 mr-1" src=" {{ asset("img/no-image.svg")}}">
+                                <img class="h-10 w-10 rounded-md mx-1" src=" {{ asset("img/no-image.svg")}}">
                             @endif
 
                             <div class="ml-1">

@@ -89,7 +89,7 @@
 
                                 <small class="ml-2 text-sm text-gray-600">{{ $post->created_at->format('d/m/y, H:i') }}</small>
                                 @unless ($post->created_at->eq($post->updated_at))
-                                <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
+                                <small class="text-sm text-gray-600"> &middot; {{ __('editado') }}</small>
                                 @endunless
                             </div>
 
@@ -104,7 +104,7 @@
                                 </x-slot>
                                 <x-slot name="content">
                                     <x-dropdown-link :href="route('posts.edit', $post)">
-                                        {{ __('Edit') }}
+                                        {{ __('Editar') }}
                                     </x-dropdown-link>
 
                                     <form method="POST" action="{{ route('posts.destroy', $post) }}">

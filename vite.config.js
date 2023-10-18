@@ -7,8 +7,12 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/like.js'
             ],
             refresh: true,
         }),
     ],
+    optimizeDeps: {
+        include: ['jquery'],
+      },
 });

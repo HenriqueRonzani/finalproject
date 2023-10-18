@@ -1,13 +1,15 @@
+<link rel="stylesheet" href="{{asset('css/my.css')}}">
+
 <x-app-layout>
     <div class="flex">
         <!-- Sidebar -->
         <div class="flex-col overflow-y-auto overflow-x-hidden">        
-            <div class="flex-shrink-0">
-                <nav style="height: calc(100vh - 4.1rem);" class="bg-gray-200 border-gray-100 w-80 overflow-auto">
+            <div class="flex-shrink-0"> 
+                <nav style="height: calc(100vh - 4.1rem);" class=" bg-gray-100 w-80 overflow-auto">
 
                     @foreach ($users as $user)
-                    <a href="{{ route('user.show', ['user' => $user])}}">
-                        <div class="p-4 mr-auto flex flex-1 space-x-2 border-b border-black hover:bg-slate-200">
+                    <a href="">
+                        <div class="p-4 mr-auto flex flex-1 space-x-2 border-b border-black hover:bg-gray-50">
 
                             @php
                                 $extensions = ['png', 'jpg', 'jpeg'];
@@ -32,8 +34,8 @@
 
                             <div class="flex-1">
                                 <div class="flex justify-between items-center">
-                                    <div>
-                                        <span class="text-gray-500">{{ $user->name }}</span>
+                                    <div id="content">
+                                        <span class="text-black">{{ $user->name }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -45,8 +47,9 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex flex-grow overflow-hidden">
+        <div class="flex-col flex-grow overflow-hidden">
             @include('directmessage.message')
         </div>
     </div>
 </x-app-layout>
+

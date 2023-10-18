@@ -1,5 +1,9 @@
 <link rel="stylesheet" href="{{ asset('css/my.css') }}">
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="{{ asset('js/like.js')}}"></script>
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <x-app-layout>
     <x-slot name="header">
@@ -31,11 +35,11 @@
                     @endphp
                       
 
-                        @if (isset($file))
-                            <img class="h-10 w-10 rounded-md" src=" {{ asset($file) }}">
-                        @else
-                            <img class="h-10 w-10" src=" {{ asset("img/no-image.svg")}}">
-                        @endif
+                    @if (isset($file))
+                        <img class="h-10 w-10 rounded-md" src=" {{ asset($file) }}">
+                    @else
+                        <img class="h-10 w-10" src=" {{ asset("img/no-image.svg")}}">
+                    @endif
 
                     <div class="flex-1">
                         <div class="flex justify-between items-center">
@@ -101,30 +105,33 @@
                         <div class="flex justify-start mt-5">
 
 
-                            <form method="post" class="flex justify-start" action= "{{ route('like.toggle', $post )}}">
-                            @csrf
+                            {{-- method="post" action= "{{ route('like.toggle', $post )}}" --}}
 
-                            @if ($post->hasLiked($post))
+                            <form data-post-id="{{ $post->id }}" class="flex justify-start likeform" onsubmit="toggle(event, '{{ route('like.toggle', $post )}}')" >
 
-                            <input type=hidden name="liked" value="true">
-                            
-                            <button type="submit">
-                                <img class="mx-2 w-7" src="{{ asset('img/liked.svg') }}">
-                            </button>
+                                @if ($post->hasLiked($post))
 
-                            @else
+                                    <input type=hidden name="liked" value="true">
 
-                            <input type=hidden name="liked" value="false">
+                                    
+                                    <button type="submit">
+                                        <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
+                                    </button>
 
-                            <button type="submit">
-                                <img class="mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
-                            </button>
+                                @else
 
-                            @endif
+                                    <input id="liked" type=hidden name="liked" value="false">
 
+                                    <button type="submit">
+                                        <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
+                                    </button>
+
+                                @endif
+
+                                <p class="likecounter"> {!! count($post->likes) !!} </p>
                             </form>
 
-                            <p> {!! count($post->likes) !!} </p>
+                            
 
                             <a href="{{ route('comments.index', ['post' => $post])}}">
                                 <img class="mx-2 w-7" src="{{ asset('img/comment.svg')}}">
@@ -138,6 +145,5 @@
             @endforeach
         </div>
     </div>
-
 
 </x-app-layout>

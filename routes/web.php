@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AtividadeController;
-use App\Http\Controllers\DirectMessage;
+use App\Http\Controllers\DirectMessageController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('directmessage', DirectMessage::class)
+Route::resource('directmessage', DirectMessageController::class)
     ->only(['index'])
     ->middleware(['auth', 'verified']);
 

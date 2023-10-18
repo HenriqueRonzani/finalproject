@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class DirectMessage extends Controller
+class DirectMessageController extends Controller
 {
     /**
      * Display a listing of the resource.

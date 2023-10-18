@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="{{ asset('css/my.css') }}">
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="{{ asset('js/like.js')}}"></script>
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <x-app-layout>
     
@@ -90,30 +93,30 @@
                         <div class="flex justify-start mt-5">
 
 
-                            <form method="post" class="flex justify-start" action= "{{ route('like.toggle', $post )}}">
-                            @csrf
+                            <form data-post-id="{{ $post->id }}" class="flex justify-start likeform" onsubmit="toggle(event, '{{ route('like.toggle', $post )}}')" >
 
-                            @if ($post->hasLiked($post))
+                                @if ($post->hasLiked($post))
 
-                            <input type=hidden name="liked" value="true">
-                            
-                            <button type="submit">
-                                <img class="mx-2 w-7" src="{{ asset('img/liked.svg') }}">
-                            </button>
+                                    <input type=hidden name="liked" value="true">
+                                
+                                    <button type="submit">
+                                        <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
+                                    </button>
 
-                            @else
+                                @else
 
-                            <input type=hidden name="liked" value="false">
+                                    <input id="liked" type=hidden name="liked" value="false">
 
-                            <button type="submit">
-                                <img class="mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
-                            </button>
+                                    <button type="submit">
+                                        <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
+                                    </button>
 
-                            @endif
+                                @endif
 
+                                <p class="likecounter"> {!! count($post->likes) !!} </p>
                             </form>
 
-                            <p> {!! count($post->likes) !!} </p>
+                            
 
                             <a href="{{ route('comments.index', ['post' => $post])}}">
                                 <img class="mx-2 w-7" src="{{ asset('img/comment.svg')}}">

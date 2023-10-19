@@ -1,5 +1,10 @@
 <link rel="stylesheet" href="{{asset('css/my.css')}}">
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="{{ asset('js/messageuser.js')}}"></script>
+
+<meta id="route" data-route="{{ route('message.show') }}">
+
 <x-app-layout>
     <div class="flex">
         <!-- Sidebar -->
@@ -8,8 +13,8 @@
                 <nav style="height: calc(100vh - 4.1rem);" class=" bg-gray-100 w-80 overflow-auto">
 
                     @foreach ($users as $user)
-                    <a href="">
-                        <div class="p-4 mr-auto flex flex-1 space-x-2 border-b border-black hover:bg-gray-50">
+                    <div data-user-id="{{$user->id}}" class="p-4 mr-auto flex flex-1 space-x-2 border-b border-black hover:bg-gray-50 user" onclick="message(this, '{{ route('message.show') }}')">
+
 
                             @php
                                 $extensions = ['png', 'jpg', 'jpeg'];
@@ -25,7 +30,6 @@
                                 }
                             @endphp
                             
-
                                 @if (isset($file))
                                     <img class="h-10 w-10 rounded-md" src=" {{ asset($file) }}">
                                 @else
@@ -40,7 +44,6 @@
                                 </div>
                             </div>
                         </div>
-                    </a>
                     @endforeach 
                 </nav>
             </div>

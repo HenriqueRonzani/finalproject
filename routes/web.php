@@ -58,20 +58,24 @@ Route::resource('comments', CommentController::class)
     ->only(['index','store','edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-Route::post('/like/liketoggle/{post}', [LikeController::class, 'likeToggle'])
+Route::post('like/liketoggle/{post}', [LikeController::class, 'likeToggle'])
     ->name('like.toggle')
     ->middleware(['auth', 'verified']);
 
-Route::get('/atividades/posts', [AtividadeController::class, 'posts'])
+Route::get('atividades/posts', [AtividadeController::class, 'posts'])
     ->name('atividades.posts')
     ->middleware(['auth','verified']);
 
-Route::get('/atividades/likes', [AtividadeController::class, 'likes'])
+Route::get('atividades/likes', [AtividadeController::class, 'likes'])
     ->name('atividades.likes')
     ->middleware(['auth','verified']);
 
-Route::get('/atividades/comments', [AtividadeController::class, 'comments'])
+Route::get('atividades/comments', [AtividadeController::class, 'comments'])
     ->name('atividades.comments')
+    ->middleware(['auth','verified']);
+
+Route::get('/directmessage/show', [DirectMessageController::class, 'show'])
+    ->name('message.show')
     ->middleware(['auth','verified']);
 
 require __DIR__.'/auth.php';

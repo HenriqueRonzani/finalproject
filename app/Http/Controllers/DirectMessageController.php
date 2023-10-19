@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DirectMessage;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,52 @@ class DirectMessageController extends Controller
         ]);
     }
 
+    public function show(Request $request)
+    {
+        $selecteduser = $request->input('selecteduser');
+        $user = auth()->user()->id;
+
+        $messages = DirectMessage::with(['sender', 'receiver'])
+        ->where(function ($query) use ($user, $selecteduser) {
+            $query->where('SENDER_ID', $user)
+                ->where('RECEIVER_ID', $selecteduser);
+        })
+        ->orWhere(function ($query) use ($user, $selecteduser) {
+            $query->where('SENDER_ID', $selecteduser)
+                ->where('RECEIVER_ID', $user);
+        })
+        ->orderBy('CREATED_AT')
+        ->get();
+        
+        $authuserimage = $this->getimage(auth()->user()->id);
+        $otheruserimage = $this->getimage($selecteduser);
+
+        
+        $data = [
+            'userimage' => $authuserimage,
+            'otheruserimage' => $otheruserimage,
+            'messages' => $messages,
+            'user' => $user,
+        ];
+
+        return response()->json($data);
+    }
+
+    public function getimage($id){
+        $extensions = ['png', 'jpg', 'jpeg'];
+        $file = asset("img/no-image.svg");
+
+        foreach ($extensions as $ext) {
+            $filePath = storage_path("app/public/profilepicture/") . $id . ".$ext";
+
+            if (file_exists($filePath)) {
+                $file = "storage/profilepicture/" . $id . ".$ext";
+                break;
+            }
+        }
+        return $file;
+    }
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -36,10 +83,7 @@ class DirectMessageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    
 
     /**
      * Show the form for editing the specified resource.

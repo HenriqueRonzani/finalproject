@@ -92,11 +92,11 @@
                         @else
 
                             <div class="max-w-5xl">
-                                <pre class="text-sm overflow-auto pb">
+                                <div class="code-container text-sm overflow-auto pb">
                                     <x-torchlight-code class="max-w-full" language="{{$post->type->name}}">
                                         {!! $post->message !!}
                                     </x-torchlight-code>
-                                </pre>
+                                </div>
                             </div>
 
                         @endif

@@ -2,8 +2,9 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="{{ asset('js/messageuser.js')}}"></script>
+<script src="{{ asset('js/sendmessage.js')}}"></script>
 
-<meta id="route" data-route="{{ route('message.show') }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <x-app-layout>
     <div class="flex">

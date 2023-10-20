@@ -78,4 +78,8 @@ Route::get('/directmessage/show', [DirectMessageController::class, 'show'])
     ->name('message.show')
     ->middleware(['auth','verified']);
 
+Route::post('directmessage/send', [DirectMessageController::class, 'sendmessage'])
+    ->name('message.send')
+    ->middleware(['auth', 'verified']);
+
 require __DIR__.'/auth.php';

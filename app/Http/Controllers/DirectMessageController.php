@@ -18,6 +18,28 @@ class DirectMessageController extends Controller
         ]);
     }
 
+    public function sendmessage(Request $request)
+    {   
+        $message = $request->input("message");
+        $receiverid = $request->input("receiver");
+        $userid = auth()->user()->id;
+
+        $authuserimage = $this->getimage(auth()->user()->id);
+
+        $data = [
+            'message' => $message,
+            'sender_id' => $userid,
+            'receiver_id' => $receiverid,
+        ];
+
+
+        DirectMessage::create($data);
+
+        $responsedata = [
+            'userimage' => $authuserimage,
+        ];
+        return response()->json($responsedata);
+    }
     public function show(Request $request)
     {
         $selecteduser = $request->input('selecteduser');
@@ -44,6 +66,7 @@ class DirectMessageController extends Controller
             'otheruserimage' => $otheruserimage,
             'messages' => $messages,
             'user' => $user,
+            'otheruser' => $selecteduser
         ];
 
         return response()->json($data);
@@ -60,7 +83,7 @@ class DirectMessageController extends Controller
                 $file = "storage/profilepicture/" . $id . ".$ext";
                 break;
             }
-        }
+        }   
         return $file;
     }
     
@@ -77,7 +100,7 @@ class DirectMessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // INSERT INTO `directmessage` (`id`, `message`, `sender_id`, `receiver_id`, `created_at`, `updated_at`) VALUES
     }
 
     /**
@@ -108,4 +131,6 @@ class DirectMessageController extends Controller
     {
         //
     }
+
+    
 }

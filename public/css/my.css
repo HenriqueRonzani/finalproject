@@ -1,11 +1,13 @@
-pre {
+/* Styling for the outer div containing code */
+div.code-container {
     border-radius: 0.25rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
     overflow-x: auto;
 }
 
-pre code.torchlight {
+/* Styling for the code block inside the div */
+div.code-container code {
     display: block;
     min-width: -webkit-max-content;
     min-width: -moz-max-content;
@@ -15,13 +17,15 @@ pre code.torchlight {
     border-radius: 15px;
 }
 
-pre code.torchlight .line {
+/* Styling for individual lines in the code block */
+div.code-container code .line {
     padding-left: 1rem;
     padding-right: 1rem;
 }
 
-pre code.torchlight .line-number,
-pre code.torchlight .summary-caret {
+/* Styling for line numbers and summary caret */
+div.code-container code .line-number,
+div.code-container code .summary-caret {    
     margin-right: 1rem;
 }
 

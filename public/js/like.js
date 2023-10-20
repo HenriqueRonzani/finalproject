@@ -1,4 +1,5 @@
 
+
 function toggle(event, route){
     event.preventDefault();
 
@@ -11,6 +12,7 @@ function toggle(event, route){
 
     var postId = form.data('post-id');
 
+    
     $.ajax({
         url: route,
         type: "POST",

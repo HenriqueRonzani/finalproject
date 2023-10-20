@@ -9,6 +9,11 @@ class DirectMessage extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'message',
+        'sender_id',
+        'receiver_id',
+    ];
     protected $table = 'directmessage'; // Assuming your table name is 'messages'
 
     public function sender()

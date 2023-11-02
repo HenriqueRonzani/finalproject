@@ -1,4 +1,4 @@
-<div id="things" class="bg-blue-200" data-route-start=" {{route('message.show')}}" hidden></div>
+<div id="things" class="bg-blue-200" data-route-delete="{{route('chat.delete')}}" data-route-start="{{route('message.show')}}" hidden></div>
 <div class="flex flex-col bg-gray-200" style="height: calc(100vh - 4.1rem);">
 
     <!-- Showing messages div -->

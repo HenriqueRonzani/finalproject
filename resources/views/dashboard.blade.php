@@ -3,7 +3,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="{{ asset('js/like.js') }}"></script>
 
-<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <x-app-layout>
     <x-slot name="header">

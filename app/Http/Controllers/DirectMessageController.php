@@ -130,6 +130,16 @@ class DirectMessageController extends Controller
     }
 
 
+    public function deleteconversation(Request $request) {
+        
+        $otheruserid = $request->input('otheruserid');
+        $user = User::find(auth()->user()->id);
+        $conversation = $user->getconversationsbetweenusers($user->id, $otheruserid)->first();
+
+        $conversation->delete();
+
+        return response()->json();
+    }
     
     /**
      * Show the form for creating a new resource.

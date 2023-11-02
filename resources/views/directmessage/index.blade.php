@@ -5,6 +5,7 @@
 <script src="{{ asset('js/sendmessage.js')}}"></script>
 <script src="{{ asset('js/newconversation.js')}}"></script>
 <script src="{{ asset('js/messagefromredirect.js')}}"></script>
+<script src="{{ asset('js/deletechat.js')}}"></script>
 
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -23,7 +24,7 @@
                 @endif
 
                     @foreach ($users as $user)
-                        <div data-user-id="{{$user->id}}" class="p-4 mr-auto flex flex-1 space-x-2 border-b border-black hover:bg-gray-200 user" onclick="message(this, '{{ route('message.show') }}')">
+                        <div data-user-id="{{$user->id}}" class="group user p-4 mr-auto flex flex-1 space-x-2 border-b border-black hover:bg-gray-200" onclick="message(this, '{{ route('message.show') }}')">
 
                             @if ($user->pfp != null)
                                 <img class="my-auto h-10 w-10 rounded-md" src=" {{asset("storage/profilepicture/". $user->id. "." . $user->pfp) }}">
@@ -36,6 +37,9 @@
                                     <div id="content">
                                         <span class="text-black">{{ $user->name }}</span>
                                     </div>
+                                    <button class="hidden group-hover:inline-block transition" onclick="deleteconversation('{{$user->id}}','{{ route('chat.delete')}}', event, this)">
+                                        {{__('X')}}
+                                    </button>
                                 </div>
                             </div>
                         </div>

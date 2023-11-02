@@ -86,4 +86,8 @@ Route::get('directmessage/new', [DirectMessageController::class, 'newconversatio
     ->name('message.new')
     ->middleware(['auth', 'verified']);
 
+Route::get('directmessage/deletechat', [DirectMessageController::class, 'deleteconversation'])
+    ->name('chat.delete')
+    ->middleware(['auth', 'verified']);
+
 require __DIR__.'/auth.php';

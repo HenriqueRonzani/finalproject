@@ -6,6 +6,9 @@ function sendmessage(event, route)
     
     var ids = $('#ids');
     
+    var things = $('#things')
+    
+    var deleteroute = "'"+ things.data('route-delete') +"'";
     
     var friendid = ids.data('friend-id');
     var message = $('#message').val();
@@ -59,16 +62,19 @@ function sendmessage(event, route)
                 $('.user').css('background-color','rgb(249, 250, 251)');
 
                 var html = 
-                    '<div data-user-id=" '+ receiver.id +'" class="p-4 bg-gray-50 mr-auto flex flex-1 space-x-2 border-b border-black hover:bg-gray-50 user" onclick="message(this, '+ "/directmessage/show')" + '">' +
-                        '<img class="my-auto h-10 w-10 rounded-md" src=" '+ otheruserimage +'">' +
-                        '<div class="flex-1">' +
-                            '<div class="flex justify-between items-center">' +
-                                '<div id="content">' +
-                                    '<span class="text-black">'+ receiver.name +' </span>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+                '<div data-user-id="'+receiver.id+'" class="group p-4 mr-auto flex flex-1 space-x-2 border-b border-black hover:bg-gray-50 user" onclick="message(this, '+msgroute+')">'+
+                    '<img class="my-auto h-10 w-10 rounded-md" src=" '+userimage+' ">'+
+                        '<div class="flex-1">'+
+                            '<div class="flex justify-between items-center">'+
+                                '<div id="content">'+
+                                    '<span class="text-black">'+receiver.name+'</span>'+
+                                '</div>'+
+                                '<button class="hidden group-hover:inline-block transition" onclick="deleteconversation('+ receiver.id +','+ deleteroute +', event, this)">' +
+                                        'X'+
+                                '</button>'+
+                            '</div>'+
+                        '</div>'+
+                '</div>';
                 showusers.prepend(html);
 
                 if ($('#lastConversation').length){

@@ -8,21 +8,6 @@
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>
-    
-
-    @php
-        $extensions = ['png', 'jpg', 'jpeg'];
-        $file = null;
-
-        foreach ($extensions as $ext) {
-            $filePath = storage_path("app/public/profilepicture/") . auth()->user()->id . ".$ext";
-
-            if (file_exists($filePath)) {
-                $file = "storage/profilepicture/" . auth()->user()->id . ".$ext";
-                break;
-            }
-        }
-    @endphp
 
     <div class="py-5 border-y-2">
         <header>
@@ -35,8 +20,9 @@
             </p>
         </header>
 
-        @if (isset($file))
-                <img class="mt-5" height="200x" width="200px" src=" {{ asset($file) }}">
+
+        @if ($user->pfp != null)
+                <img class="mt-5" height="200x" width="200px" src=" {{ asset("storage/profilepicture/$user->id.$user->pfp") }}">
                
                 <a href="{{ route('profile.picdelete') }}">
                     <button class="inline-flex items-center border border-transparent rounded-md font-semibold text-sm text-gray-700 uppercase tracking-widest hover:text-gray-900 active:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 mb-3">

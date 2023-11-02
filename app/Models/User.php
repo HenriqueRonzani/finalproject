@@ -25,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'pfp',
     ];
 
     /**
@@ -71,5 +72,40 @@ class User extends Authenticatable
     {
         return $this->hasMany(DirectMessage::class, 'RECEIVER_ID', 'ID_USER');
     }
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class, 'user1_id', 'id')
+                    ->orWhere('user2_id', $this->id);
+    }
 
+    public function getConversationUsers()
+    {
+        $conversations = $this->conversations()->get();
+
+        $userIds = $conversations->pluck('user1_id')->merge($conversations->pluck('user2_id'))->unique();
+
+        return User::whereIn('id', $userIds)->where('id', '!=', $this->id)->get();
+    }
+
+    public function getotherUsers()
+    {
+        $conversations = $this->conversations()->get();
+
+        $userIds = $conversations->pluck('user1_id')->merge($conversations->pluck('user2_id'))->unique();
+
+        return User::whereNotIn('id', $userIds)->where('id', '!=', $this->id)->get();
+    }
+
+    public function getconversationsbetweenusers($user1Id, $user2Id)
+    {
+        return Conversation::where(function ($query) use ($user1Id, $user2Id) {
+            $query->where('user1_id', $user1Id)
+                  ->where('user2_id', $user2Id);
+        })
+        ->orWhere(function ($query) use ($user1Id, $user2Id) {
+            $query->where('user1_id', $user2Id)
+                  ->where('user2_id', $user1Id);
+        })
+        ->get();
+    }
 }

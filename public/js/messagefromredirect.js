@@ -1,14 +1,21 @@
+$(function() {
+    var urlParam = new URLSearchParams(window.location.search);
+    userid = urlParam.get('user');
 
-function message(element, route){
-    var target = $(element);
-    var selecteduser =  target.data("user-id");
+    if (userid !== null)[
+        showchat(userid)
+    ]
+})
+
+function showchat(userid){
+
     var div = $('#showmessages');
 
     $.ajax({
-        url: route,
+        url: 'directmessage/show',
         method: "GET",
         data: {
-            selecteduser: selecteduser
+            selecteduser: userid
         },
         dataType: 'json',
         
@@ -28,6 +35,7 @@ function message(element, route){
             div.append('<div id="ids" data-friend-id="'+ otheruser.id +'" hidden></div>');
             
             $.each(messages, function(index, message) {
+
                 var html;
 
                 var responsedate = new Date(message.created_at);
@@ -76,11 +84,10 @@ function message(element, route){
             div.scrollTop(div.prop("scrollHeight"));
 
             $('.user').css('background-color','rgb(249, 250, 251)');
-
-            target.css('background-color','rgb(209 213 219)');
         },
-        error: function (response) {
-        
+
+        error: function(response){
+            alert("deu merdassss");
         }
     });
 }

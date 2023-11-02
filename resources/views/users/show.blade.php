@@ -2,6 +2,9 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="{{ asset('js/like.js')}}"></script>
+<script src="{{ asset('js/startchat.js')}}"></script>
+
+
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -14,53 +17,52 @@
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
+            <div class=" p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="flex">
+                    <div class="flex flex-col">
 
-                    <header>
-                        <h2 class="text-lg font-medium text-gray-900">
-                            {{ __('Informações do Usuário')}}
-                        </h2>
-                    </header>
+                        <header>
+                            <h2 class="text-3xl font-medium text-gray-900">
+                                {{ __('Informações do Usuário')}}
+                            </h2>
+                        </header>
 
-                    <div class="mt-6 space-y-6">
-                        <div>
-                            <h2 class="text-lg text-gray-950 font-bold">{{__('Nome')}} </h2>
-                            <h2 class="text-base">{!! $user->name !!}<h2/>
+                        <div class="mt-6 space-y-6">
+                            <div>
+                                <h2 class="text-2xl text-gray-950 font-bold">{{__('Nome')}} </h2>
+                                <h2 class="text-lg">{!! $user->name !!}<h2/>
+                            </div>
                         </div>
+
+                        @unless ($user->is(auth()->user())) 
+                        <div class="flex-grow flex items-end justify-end">
+                                <button class="mr-auto p-2 bg-blue-300 rounded-md text-gray-900" onclick="redirectto({{$user->id}})">{{ __('Iniciar conversa com '. $user->name)}}</button>
+                        </div>
+                        @endunless    
+                        
+                        
                     </div>
-                    @php
-                    $extensions = ['png', 'jpg', 'jpeg'];
-                    $file = null;
-            
-                    foreach ($extensions as $ext) {
-                        $filePath = storage_path("app/public/profilepicture/") . $user->id . ".$ext";
-            
-                        if (file_exists($filePath)) {
-                            $file = "storage/profilepicture/" . $user->id . ".$ext";
-                            break;
-                        }
-                    }
-                @endphp
-            
-                <div class="my-2 py-3 border-y-2">
-                    <header>
-                        <h2 class="text-lg font-medium text-gray-900">
-                            {{ __('Foto de Perfil') }}
-                        </h2>
-                
-                        <p class="my-1 text-sm text-gray-600">
-                            {{ __("Envie uma imagem em .jpg, .jpeg ou .png para alterar a foto de perfil") }}
-                        </p>
-                    </header>
-            
-                    @if (isset($file))
-                            <img class="mt-5" height="200x" width="200px" src=" {{ asset($file) }}">
-                    @else
-                            <img class="my-5" height="200px" width="200px" src=" {{ asset("img/no-image.svg")}}">
-                    @endif
+                    {{-- my-2 py-3 --}}
+                    <div class="flex-1 flex flex-col items-end justify-end">
+                        
+                        <div>
+                            <header class="text-center">
+                                <h2 class="mx-auto text-lg font-medium text-gray-900">
+                                    {{ __('Foto de Perfil') }}
+                                </h2>
+                            </header>
+                            @if ($user->pfp != null)
+                                <img class="mt-5" height="200x" width="200px" src=" {{asset("storage/profilepicture/". $user->id. "." . $user->pfp) }}">
+                            @else
+                                <img class="my-5" height="200px" width="200px" src=" {{ asset('img/no-image.svg') }}">
+                            @endif
+                        </div>
+                        
+                    </div>
+
                 </div>
             </div>
+            
         </div>
     </div>
     
@@ -76,7 +78,9 @@
                 </header> 
             </div>
 
-            @foreach ($user->posts as $post)
+
+
+            @forelse ($user->posts as $post)
             
           
                 <div class="p-6 flex space-x-2">
@@ -181,7 +185,11 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="p-6 flex space-x-2">
+                    <h2 class="align center mx-auto text-gray-500"> {{ __($user->name .' não possui posts')}}
+                </div>
+            @endforelse
         </div>
     </div>
     

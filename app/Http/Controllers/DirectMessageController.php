@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conversation;
 use App\Models\DirectMessage;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,8 +14,13 @@ class DirectMessageController extends Controller
      */
     public function index()
     {
+        $user = User::find(auth()->user()->id);
+        $users = $user->getConversationUsers();
+        $hasAllConversations = $user->conversations()->count() == (User::all()->count() -1 );
+
         return View('directmessage.index',[
-            'users' => User::where('id', '!=', auth()->user()->id)->get()
+            'users' => $users,
+            'hasAllConversations' => $hasAllConversations,
         ]);
     }
 
@@ -24,7 +30,6 @@ class DirectMessageController extends Controller
         $receiverid = $request->input("receiver");
         $userid = auth()->user()->id;
 
-        $authuserimage = $this->getimage(auth()->user()->id);
 
         $data = [
             'message' => $message,
@@ -34,12 +39,41 @@ class DirectMessageController extends Controller
 
 
         DirectMessage::create($data);
+        
+        
+
+        $user = User::find($userid);
+        $receiveruser = User::find($receiverid);
+
+        //
+
+        $conversations = $user->getconversationsbetweenusers($user->id, $receiverid);
+
+        $createdconversation = false;
+        if($conversations->count() === 0) {
+            $data = [  
+                'user1_id' => $user->id,
+                'user2_id' => $receiverid
+            ];
+            Conversation::create($data);
+            $createdconversation = true;
+        }
+
+        //
+
+
+
+        $userimage = $user->pfp ? "storage/profilepicture/" . $user->id . '.' . $user->pfp : 'img/no-image.svg';
 
         $responsedata = [
-            'userimage' => $authuserimage,
+            'receiveruser' => $receiveruser,
+            'userimage' => $userimage,
+            'currentdate' => date("H:i d/m"),
+            'createdconversation' => $createdconversation,
         ];
         return response()->json($responsedata);
     }
+    
     public function show(Request $request)
     {
         $selecteduser = $request->input('selecteduser');
@@ -57,16 +91,12 @@ class DirectMessageController extends Controller
         ->orderBy('CREATED_AT')
         ->get();
         
-        $authuserimage = $this->getimage(auth()->user()->id);
-        $otheruserimage = $this->getimage($selecteduser);
 
         
         $data = [
-            'userimage' => $authuserimage,
-            'otheruserimage' => $otheruserimage,
             'messages' => $messages,
-            'user' => $user,
-            'otheruser' => $selecteduser
+            'user' => User::find($user),
+            'otheruser' => User::find($selecteduser)
         ];
 
         return response()->json($data);
@@ -86,6 +116,20 @@ class DirectMessageController extends Controller
         }   
         return $file;
     }
+
+    public function newconversation() {
+        
+        $thisuser = User::find(auth()->user()->id);
+
+        $users = $thisuser->getotherUsers();
+        
+        $data = [
+            "users"=> $users
+        ];
+        return response()->json($data);
+    }
+
+
     
     /**
      * Show the form for creating a new resource.

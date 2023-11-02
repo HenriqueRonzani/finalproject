@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,7 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $this->picdelete();
+        $this->delete();
         
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
@@ -64,12 +65,16 @@ class ProfileController extends Controller
     public function picture(Request $request)
     {
         $this->delete();
+
+        $user = User::find(auth()->user()->id);
         
         $extension = $request->file('picture')->getClientOriginalExtension();
 
-        $name = auth()->user()->id . '.' . $extension;
+        $name = $user->id . '.' . $extension;
 
         $request->file('picture')->move(storage_path("app/public/profilepicture"), $name);
+        
+        $user->update(['pfp' => $extension]);
 
         return back();
     }
@@ -82,17 +87,12 @@ class ProfileController extends Controller
 
     private function delete()
     {
-        $extensions = ['png', 'jpg', 'jpeg'];
+        $user = User::find(auth()->user()->id);
 
-        foreach ($extensions as $ext) {
-            $filePath = "public/profilepicture/" . auth()->user()->id . ".$ext";
+        $filePath = "public/profilepicture/" . $user->id . ".$user->pfp";
 
-            if (Storage::exists($filePath)) {
-                Storage::delete($filePath);
-                break;
-                
-            }
-        } 
+        Storage::delete($filePath);
+        
     }
 
 }

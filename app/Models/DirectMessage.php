@@ -14,7 +14,7 @@ class DirectMessage extends Model
         'sender_id',
         'receiver_id',
     ];
-    protected $table = 'directmessage'; // Assuming your table name is 'messages'
+    protected $table = 'directmessages';
 
     public function sender()
     {

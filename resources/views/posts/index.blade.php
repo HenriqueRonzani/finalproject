@@ -16,6 +16,7 @@
                 name="message"
                 placeholder="{{ __('Digite o seu código ou dúvida') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                spellcheck="false"
                 required
                 >{{ old('message') }}</textarea>
 

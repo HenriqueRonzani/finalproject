@@ -37,7 +37,7 @@ class PostController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:30',
-            'message' => 'required|string|max:1000',
+            'message' => 'required|string',
             'type_id' => 'required|integer|exists:types,id',
         ]);
 

@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('directmessage', function (Blueprint $table) {
+        Schema::create('conversations', function (Blueprint $table) {
             $table->id();
-            $table->string('message');
-            $table->foreignId('sender_id')->references('id')->on('users');
-            $table->foreignId('receiver_id')->references('id')->on('users');
+            $table->foreignId('user1_id')->references('id')->on('users');
+            $table->foreignId('user2_id')->references('id')->on('users');
             $table->timestamps();
+            
+            $table->unique(['user1_id', 'user2_id']);
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('conversations');
     }
 };

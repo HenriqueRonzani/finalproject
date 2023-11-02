@@ -51,7 +51,7 @@ return [
         // 'lineNumbers' => false,
 
         // Control the `style` attribute applied to line numbers.
-        // 'lineNumbersStyle' => '',
+         'lineNumbersStyle' => '"lineNumbersStyle": "padding-right: 2em;"',
 
         // Turn on +/- diff indicators.
         // 'diffIndicators' => true,

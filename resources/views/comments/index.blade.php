@@ -22,33 +22,24 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
-            <div class="p-6 flex space-x-2">
-                @php
-                    $extensions = ['png', 'jpg', 'jpeg'];
-                    $file = null;
+            <div class="p-6 flex-1 space-x-2">
 
-                    foreach ($extensions as $ext) {
-                        $filePath = storage_path("app/public/profilepicture/") . $post->user->id . ".$ext";
+                <div class="flex">
 
-                        if (file_exists($filePath)) {
-                            $file = "storage/profilepicture/" . $post->user->id . ".$ext";
-                            break;
-                        }
-                    }
-                @endphp
-            
+                    @if ($post->user->pfp != null)
+                        <img class="my-auto h-10 w-10 rounded-md" src=" {{asset("storage/profilepicture/". $post->user->id. "." . $post->user->pfp) }}">
+                    @else
+                        <img class="my-auto h-10 w-10" src=" {{ asset('img/no-image.svg') }}">
+                    @endif
 
-                @if (isset($file))
-                    <img class="h-10 w-10 rounded-md" src=" {{ asset($file) }}">
-                @else
-                    <img class="h-10 w-10" src=" {{ asset("img/no-image.svg")}}">
-                @endif
-
-                <div class="flex-1">
+                <div class="flex-1 px-2">
 
                     <div class="flex justify-between items-center">
                         <div>
-                            <span class="text-gray-800">{{ $post->user->name }}</span>
+                            <a href="{{ route('user.show', ['user' => $post->user]) }}">
+                                <span
+                                    class="text-gray-500 hover:text-gray-950 hover:border-b-2">{{ $post->user->name }}</span>
+                            </a>
                             <small
                                 class="ml-2 text-sm text-gray-600">{{ $post->created_at->format('d/m/y, H:i') }}</small>
                             @unless ($post->created_at->eq($post->updated_at))
@@ -89,15 +80,19 @@
                     </div>
 
                     <p class="text-gray-800 text-2xl">{{ $post->title }}</p>
-
+                </div>
+            </div>
+            <div class="flex-1">
                     @if ($post->type->value == 'SC')
-                        <p class="my-6">{!! $post->message !!}</p>
+                        <p>{!! $post->message !!}</p>
                     @else
-                        <pre class=" text-sm overflow-auto max-w-5xl">
-                            <x-torchlight-code language="{{ $post->type->name }}">
-                                {!! $post->message !!}
-                            </x-torchlight-code>
-                        </pre>
+                        <div class="max-w-5xl mx-auto" >
+                            <div class="code-container text-sm overflow-auto pb">
+                                <x-torchlight-code class="max-w-full" language="{{ $post->type->name }}">
+                                    {!! $post->message !!}
+                                </x-torchlight-code>
+                            </div>
+                        </div>
                     @endif
 
 
@@ -157,19 +152,24 @@
 
     @foreach ($comments as $comment)
         <div class="max-w-7xl mx-auto pb-4 sm:px-6 lg:px-8">
-            <div class=" bg-white shadow-sm rounded-lg divide-y">
-                <div class="p-6 flex space-x-2">
+            <div class="bg-white shadow-sm rounded-lg divide-y">
+                <div class="p-6 flex-1 space-x-2">
 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                    </svg>
+                    <div class="flex">
 
-                    <div class="flex-1">
+                    @if ($post->user->pfp != null)
+                        <img class="my-auto h-10 w-10 rounded-md" src=" {{asset("storage/profilepicture/". $post->user->id. "." . $post->user->pfp) }}">
+                    @else
+                        <img class="my-auto h-10 w-10" src=" {{ asset('img/no-image.svg') }}">
+                    @endif
+
+                    <div class="flex-1 px-2">
                         <div class="flex justify-between items-center">
                             <div>
-                                <span class="text-gray-800">{{ $comment->user->name }}</span>
+                                <a href="{{ route('user.show', ['user' => $comment->user]) }}">
+                                    <span
+                                        class="text-gray-500 hover:text-gray-950 hover:border-b-2">{{ $comment->user->name }}</span>
+                                </a>
                                 <small
                                     class="ml-2 text-sm text-gray-600">{{ $comment->created_at->format('d/m/y, H:i') }}</small>
                             </div>
@@ -205,9 +205,11 @@
                                 </x-dropdown>
                             @endif
                         </div>
-
-                        <p class="mt-4 text-lg text-gray-900">{{ $comment->message }}</p>
+                        <small class="text-sm text-gray-400">{{__('Comentou:')}}</small>
                     </div>
+                </div>
+                <div class="flex-1">
+                    <p class="ml-10 mt-4 text-lg text-gray-900">{{ $comment->message }}</p>
                 </div>
             </div>
         </div>

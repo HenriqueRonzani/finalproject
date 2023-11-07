@@ -13,33 +13,23 @@
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
             @foreach ($posts as $post)
-            
-          
-                <div class="p-6 flex space-x-2">
-                    @php
-                        $extensions = ['png', 'jpg', 'jpeg'];
-                        $file = null;
+                <div class="p-6 flex-1 space-x-2">
 
-                        foreach ($extensions as $ext) {
-                            $filePath = storage_path("app/public/profilepicture/") . $post->user->id . ".$ext";
+                    <div class="flex">
 
-                            if (file_exists($filePath)) {
-                                $file = "storage/profilepicture/" . $post->user->id . ".$ext";
-                                break;
-                            }
-                        }
-                    @endphp
-                  
-
-                    @if (isset($file))
-                        <img class="h-10 w-10 rounded-md" src=" {{ asset($file) }}">
+                    @if ($post->user->pfp != null)
+                        <img class="my-auto h-10 w-10 rounded-md" src=" {{asset("storage/profilepicture/". $post->user->id. "." . $post->user->pfp) }}">
                     @else
-                        <img class="h-10 w-10" src=" {{ asset("img/no-image.svg")}}">
+                        <img class="my-auto h-10 w-10" src=" {{ asset('img/no-image.svg') }}">
                     @endif
-                    <div class="flex-1">
+
+                    <div class="flex-1 px-2">
                         <div class="flex justify-between items-center">
                             <div>
-                                <span class="text-gray-800">{{ $post->user->name }}</span>
+                                <a href="{{ route('user.show', ['user' => $post->user]) }}">
+                                    <span
+                                        class="text-gray-500 hover:text-gray-950 hover:border-b-2">{{ $post->user->name }}</span>
+                                </a>
                                 <small class="ml-2 text-sm text-gray-600">{{ $post->created_at->format('d/m/y, H:i') }}</small>
                                 @unless ($post->created_at->eq($post->updated_at))
                                 <small class="text-sm text-gray-600"> &middot; {{ __('editado') }}</small>
@@ -77,15 +67,19 @@
                         </div>
 
                         <p class="text-gray-800 text-2xl">{{ $post->title }}</p>
-
-                        @if($post->type->value == "SC")
+                    </div>
+                </div>
+                <div class="flex-1">
+                        @if ($post->type->value == 'SC')
                             <p>{!! $post->message !!}</p>
                         @else
-                            <pre class=" text-sm overflow-auto max-w-5xl">
-                                <x-torchlight-code language="{{$post->type->name}}">
-                                    {!! $post->message !!}
-                                </x-torchlight-code>
-                            </pre>
+                            <div class="max-w-5xl mx-auto" >
+                                <div class="code-container text-sm overflow-auto pb">
+                                    <x-torchlight-code class="max-w-full" language="{{ $post->type->name }}">
+                                        {!! $post->message !!}
+                                    </x-torchlight-code>
+                                </div>
+                            </div>
                         @endif
 
 

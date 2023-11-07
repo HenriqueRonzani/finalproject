@@ -2,6 +2,13 @@
 <div class="flex flex-col bg-gray-200" style="height: calc(100vh - 4.1rem);">
 
     <!-- Showing messages div -->
+    <div id="panel" class="hidden bg-slate-50 h-14">
+        <img id="panel-user-image" class="h-10 my-auto mx-5">        
+        <div class="my-auto">
+            <span id="panel-user-name" class="text-black text-lg"></span>
+        </div>
+    </div>
+
     <div id="showmessages" class="overflow-y-auto flex-grow">
         <img class="h-full w-full" src="{{asset('img/placeholder.svg')}}">
     </div>

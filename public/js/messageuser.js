@@ -78,6 +78,15 @@ function message(element, route){
             $('.user').css('background-color','rgb(249, 250, 251)');
 
             target.css('background-color','rgb(209 213 219)');
+
+            $('#panel-user-image').attr('src',otheruserimage);
+            $('#panel-user-name').text(otheruser.name);
+
+            var panel = $('#panel');
+            if(panel.is(':hidden')){
+                panel.css('display','flex');
+            }
+            
         },
         error: function (response) {
         

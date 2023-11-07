@@ -18,7 +18,11 @@ function deleteconversation(otherid, route, event, element){
             div.empty();
             
             div.append('<img class="h-full w-full" src="img/placeholder.svg"></img>');
-            
+            var panel = $('#panel');
+            if(panel.css('display') === 'flex'){
+                panel.css('display','none');
+            }
+
         },
 
         error: function(){

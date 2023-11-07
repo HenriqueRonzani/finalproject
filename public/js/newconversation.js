@@ -25,6 +25,11 @@ function newconversation(route){
                 form.css('display','none');
             }
 
+            var panel = $('#panel');
+            if(panel.css('display') === 'flex'){
+                panel.css('display','none');
+            }
+
             $.each(users, function(index, user) {
 
                 var userimage = user.pfp ? 'storage/profilepicture/' + user.id + '.' + user.pfp : 'img/no-image.svg';

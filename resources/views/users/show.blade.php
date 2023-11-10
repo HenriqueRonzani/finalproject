@@ -4,6 +4,10 @@
 <script src="{{ asset('js/like.js') }}"></script>
 <script src="{{ asset('js/startchat.js') }}"></script>
 
+@if(auth()->user()->userType == 3)
+<script src="{{asset('js/bansuser.js')}}"></script>
+@endif
+
 
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -31,15 +35,46 @@
                             <div>
                                 <h2 class="text-2xl text-gray-950 font-bold">{{ __('Nome') }} </h2>
                                 <h2 class="text-lg">{!! $user->name !!}
-                                    <h2 />
+                                
                             </div>
+                            @if($user->bannedUntil && now()->lessThan($user->bannedUntil))
+                                <div class="text-lg mr-auto text-red-700 font-semibold rounded-sm w-40">
+                                    <u>{{ __('Usuário Suspenso') }}</u>
+                                </div>
+                            @endif
                         </div>
+                        
+                        
+                    
 
                         @unless ($user->is(auth()->user()))
-                            <div class="flex-grow flex items-end justify-end">
-                                <button class="mr-auto p-2 bg-blue-300 rounded-md text-gray-900"
-                                    onclick="redirectto({{ $user->id }})">{{ __('Iniciar conversa com ' . $user->name) }}</button>
+                            <div class="mb-5 flex-grow flex items-end justify-start">
+                                <button class="p-2 bg-blue-300 rounded-md text-gray-900"
+                                    onclick="redirectto({{ $user->id }})">{{ __('Iniciar conversa com ' . $user->name) }}
+                                </button>
+
+                                @if(auth()->user()->userType == 3 && !($user->bannedUntil && now()->isBefore($user->bannedUntil)))
+                                    <div class="ml-10 flex">
+                                        <div class="flex-col items-end justify-end mr-2">                                 
+                                            <label class="mt-auto" for="ban">{{__('Suspender Usuário')}}</label>
+                                            <select id="ban" class="block text-sm rounded-md focus:border-blue-500 focus:ring-blue-500 h-10" required>    
+                                                <option selected value="1">{{__('Um dia')}}</option>                                
+                                                <option value="2">{{__('Dois dias')}}</option>
+                                                <option value="7">{{__('Uma semana')}}</option>
+                                                <option value="14">{{__('Duas semanas')}}</option>
+                                                <option value="30">{{__('Um mês')}}</option>
+                                                <option value="perma">{{__('Permanente')}}</option>
+                                            </select>
+                                        </div>  
+                                        <div class="h-10 mt-auto">
+                                            <button class="mr-auto p-2 bg-red-300 rounded-md text-gray-900"
+                                            onclick="userbanning('{{$user->id}}', '{{route('admin.ban')}}' )">{{ __('Suspender') }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
+                            
                         @endunless
 
 

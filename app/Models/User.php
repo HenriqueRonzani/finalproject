@@ -10,11 +10,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Searchable;
 use App\Models\Like;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -26,6 +27,8 @@ class User extends Authenticatable
         'email',
         'password',
         'pfp',
+        'bannedUntil',
+        'userType',
     ];
 
     /**
@@ -44,9 +47,17 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    protected $dates = ['bannedUntil'];
+    
+    public function toSearchableArray(): array
+    {
+        return [
+            'id'=> $this->id,
+            'name'=> $this->name,
+        ];
+    }
 
     public function posts(): HasMany
     {

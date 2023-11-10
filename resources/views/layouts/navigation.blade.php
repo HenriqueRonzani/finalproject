@@ -29,24 +29,14 @@
                     <x-nav-link :href="route('directmessage.index')" :active="request()->routeIs('directmessage.index')">
                         {{ __('Mensagem Direta') }}
                     </x-nav-link>   
+
+                    @if (auth()->user()->userType == 3)
+                        <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
+                            {{ __('Admin') }}
+                        </x-nav-link>   
+                    @endif
                 </div>
             </div>
-
-            @php
-                $extensions = ['png', 'jpg', 'jpeg'];
-                $file = null;
-
-                foreach ($extensions as $ext) {
-                    $filePath = storage_path("app/public/profilepicture/") . Auth::user()->id . ".$ext";
-
-                    if (file_exists($filePath)) {
-                        $file = "storage/profilepicture/" . Auth::user()->id . ".$ext";
-                        break;
-                    }
-                }
-
-            @endphp
-
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -59,10 +49,12 @@
                             <div>{{ Auth::user()->name }}</div>
 
                             
-                            @if (isset($file))
-                                <img class="h-10 w-10 rounded-md mx-1" src=" {{ asset($file) }}">
+                            @if (auth()->user()->pfp != null)
+                                <img class="h-10 w-10 rounded-md mx-1" 
+                                    src=" {{ asset('storage/profilepicture/' . auth()->user()->id . '.' . auth()->user()->pfp) }}">
                             @else
-                                <img class="h-10 w-10 rounded-md mx-1" src=" {{ asset("img/no-image.svg")}}">
+                                <img class="h-10 w-10 rounded-md mx-1" 
+                                    src=" {{ asset('img/no-image.svg') }}">
                             @endif
 
                             <div class="ml-1">

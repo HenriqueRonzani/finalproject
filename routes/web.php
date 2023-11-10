@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -90,4 +91,16 @@ Route::get('directmessage/deletechat', [DirectMessageController::class, 'deletec
     ->name('chat.delete')
     ->middleware(['auth', 'verified']);
 
+Route::get('admin/page', [AdminController::class, 'index'])
+    ->name('admin.index')
+    ->middleware(['auth', 'verified']);
+
+Route::get('admin/search', [AdminController::class,'search'])
+    ->name('search.search')
+    ->middleware(['auth', 'verified']);
+
+Route::get('admin/ban', [AdminController::class,'ban'])
+    ->name('admin.ban')
+    ->middleware(['auth', 'verified']);
+    
 require __DIR__.'/auth.php';

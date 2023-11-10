@@ -37,7 +37,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment): bool
     {
-        return $comment->user()->is($user);
+        return $comment->user()->is($user) | auth()->user()->userType >= 2;
     }
 
     /**

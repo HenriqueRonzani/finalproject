@@ -3,7 +3,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="{{ asset('js/like.js') }}"></script>
 
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-center font-semibold text-2xl text-gray-800 leading-tight">
@@ -40,7 +39,7 @@
                                     @endunless
                                 </div>
 
-                                @if ($post->user->is(auth()->user()))
+                                @if ($post->user->is(auth()->user()) || auth()->user()->userType >= 2)
                                     <x-dropdown>
                                         <x-slot name="trigger">
                                             <button>
@@ -52,19 +51,22 @@
                                             </button>
                                         </x-slot>
                                         <x-slot name="content">
-                                            <x-dropdown-link :href="route('posts.edit', $post)">
-                                                {{ __('Editar') }}
-                                            </x-dropdown-link>
-
-                                            <form method="POST" action="{{ route('posts.destroy', $post) }}">
-                                                @csrf
-                                                @method('delete')
-                                                <x-dropdown-link :href="route('posts.destroy', $post)"
-                                                    onclick="event.preventDefault(); this.closest('form').submit();">
-                                                    {{ __('Apagar') }}
+                                            @if ($post->user->is(auth()->user()))
+                                                <x-dropdown-link :href="route('posts.edit', $post)">
+                                                    {{ __('Editar') }}
                                                 </x-dropdown-link>
-                                            </form>
+                                            @endif
 
+                                            @if (auth()->user()->userType >= 2)
+                                                <form method="POST" action="{{ route('posts.destroy', $post) }}">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <x-dropdown-link :href="route('posts.destroy', $post)"
+                                                        onclick="event.preventDefault(); this.closest('form').submit();">
+                                                        {{ __('Apagar') }}
+                                                    </x-dropdown-link>
+                                                </form>
+                                            @endif
                                         </x-slot>
 
                                     </x-dropdown>
@@ -77,7 +79,9 @@
                         
 
                         @if ($post->type->value == 'SC')
-                            <p>{!! $post->message !!}</p>
+                            <div class="max-w-5xl mx-auto" >
+                                <p>{!! $post->message !!}</p>
+                            </div>
                         @else
                             <div class="max-w-5xl mx-auto" >
                                 <div class="code-container text-sm overflow-auto pb">
@@ -90,9 +94,6 @@
 
 
                         <div class="flex justify-start mt-5">
-
-
-                            {{-- method="post" action= "{{ route('like.toggle', $post )}}" --}}
 
                             <form data-post-id="{{ $post->id }}" class="flex justify-start likeform"
                                 onsubmit="toggle(event, '{{ route('like.toggle', $post) }}')">

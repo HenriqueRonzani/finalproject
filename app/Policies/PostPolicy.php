@@ -37,7 +37,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        return $post->user()->is($user);
+        return $post->user()->is($user) || auth()->user()->userType >= 2;
     }
 
     /**

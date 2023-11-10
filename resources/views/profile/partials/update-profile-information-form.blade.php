@@ -37,11 +37,15 @@
 
         <form method="post" enctype="multipart/form-data" action="{{ route('profile.picture') }}" class="mt-3 space-y-6">
             @csrf
-            <label for="arquivo">Enviar imagem</label>
+            <label for="arquivo">
+                <h2 class="text-lg font-medium text-gray-900">
+                    {{ __('Enviar foto') }}
+                </h2>
+            </label>
 
-            <input class="block " type="file" name="picture" id="picture" accept=".png,.jpg,.jpeg" required>
+            <input id="arquivo" class="block " type="file" name="picture" id="picture" accept=".png,.jpg,.jpeg" required>
 
-            <x-primary-button>{{ __('Enviar') }}</x-primary-button>
+            <x-primary-button id="uploadphoto">{{ __('Enviar') }}</x-primary-button>
         </form>
 
     </div>

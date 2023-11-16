@@ -11,7 +11,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        if (! Gate::allows("viewpage", auth()->user())){
+        if (! Gate::allows("isAdmin", auth()->user())){
             abort(403);
         }
         

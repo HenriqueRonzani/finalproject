@@ -75,7 +75,9 @@
                     </div>
                     <div class="flex-1">
                         @if ($post->type->value == 'SC') 
-                            <p>{!! $post->message !!}</p>
+                            <div class="max-w-5xl mx-auto" >
+                                <p>{!! $post->message !!}</p>
+                            </div>
                         @else
                             <div class="max-w-5xl mx-auto">
                                 <div class="code-container text-sm overflow-auto pb">

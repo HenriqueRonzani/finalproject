@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\LikesComment;
 use App\Models\Post;
-use App\Models\User;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
-use App\Models\Like;
+use App\Models\LikesPost;
 
 class AtividadeController extends Controller
 {   
@@ -21,15 +20,29 @@ class AtividadeController extends Controller
     }
 
     public function likes(){
+
         $userid = auth()->user()->id;
         
-        $likes = Like::where('user_id', $userid);
-
+        $likes = LikesPost::where('user_id', $userid);
         $likesid = $likes->pluck('post_id')->toArray();
-
         $posts = Post::whereIn('id', $likesid)->get();
 
+        $likescomments = LikesComment::where('user_id', $userid);
+        $likescomments = $likescomments->pluck('comment_id')->toArray();
+        $comments = Comment::whereIn('id', $likescomments)->get();
+
+        foreach ($comments as $comment){
+            $posts = $posts->reject(function ($post) use ($comment) {
+                return $post->id === $comment->post->id;
+            });
+        }
+
+        $combined = $comments->concat($posts);
+        
+        $sortedcombined = $combined->SortByDesc('created_at');
+
         return view('atividades.likes',[
+            'postsandcomments' => $sortedcombined,
             'posts' => $posts
         ]);
     }

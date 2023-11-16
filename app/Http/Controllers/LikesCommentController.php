@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Like;
+use App\Models\Comment;
+use App\Models\LikeComments;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Post;
 
-class LikeController extends Controller
+class LikesCommentController extends Controller
 {
-    public function likeToggle(Request $request, Post $post)
+    public function likeToggle(Request $request, Comment $comment)
     {
         $userid = auth()->user()->id;
         $user = User::find($userid);
@@ -17,20 +17,17 @@ class LikeController extends Controller
         $liked = $request->input('liked');
 
         if($liked == 'true'){
-            $user->likes->where('post_id', $post->id)->each->delete();
+            
+            $user->likescomments->where('comment_id', $comment->id)->each->delete();
             $asset = asset('img/not-liked.svg');
         } else{
-            $user->likes()->create(['post_id' => $post->id]);
+            $user->likescomments()->create(['comment_id' => $comment->id]);
             $asset = asset('img/liked.svg');
         }
-
         $data = [
-            "count" => count($post->likes),
+            "count" => count($comment->likes),
             "asset" => $asset
         ];
-        
-
         return response()->json($data);
     }
 }
- 

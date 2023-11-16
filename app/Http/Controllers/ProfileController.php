@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Gate;
 
 class ProfileController extends Controller
 {
@@ -79,6 +80,23 @@ class ProfileController extends Controller
     {
         $this->delete();
         return back();
+    }
+
+    public function admindelete($userid){
+        if (! Gate::allows("hasPowers", auth()->user())){
+            abort(403);
+        }
+        else{
+            $user = User::find($userid);
+
+            $filePath = "public/profilepicture/" . $user->id . ".$user->pfp";
+
+            $user->update(['pfp' => null]);
+    
+            Storage::delete($filePath);
+            
+            return back();
+        }
     }
 
     private function delete()

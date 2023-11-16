@@ -23,7 +23,7 @@
                     </x-nav-link>
                     
                     <x-nav-link :href="route('atividades.posts')" :active="request()->routeIs('atividades.posts','atividades.likes','atividades.comments')">
-                        {{ __('Atividade') }}
+                        {{ __('Minha Atividade') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('directmessage.index')" :active="request()->routeIs('directmessage.index')">

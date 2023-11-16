@@ -2,6 +2,7 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="{{ asset('js/like.js')}}"></script>
+<script src="{{ asset('js/likecomments.js')}}"></script>
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -70,7 +71,9 @@
                 </div>
                 <div class="flex-1">
                         @if ($post->type->value == 'SC')
-                            <p>{!! $post->message !!}</p>
+                            <div class="max-w-5xl mx-auto" >
+                                <p>{!! $post->message !!}</p>
+                            </div>
                         @else
                             <div class="max-w-5xl mx-auto" >
                                 <div class="code-container text-sm overflow-auto pb">
@@ -164,11 +167,48 @@
                                     </x-dropdown>
             
                                     @endif
-                                </div>
-            
-                                <p class="mt-4 text-lg text-gray-900">{{ $comment->message }}</p>
+                                    
+                                    
+                                
+                            </div>
+                            <small class="text-sm text-gray-400">{{__('Comentou:')}}</small>
+                            <div class="flex-1">
+                                <p class="ml-10 mt-4 text-lg text-gray-900">{{ $comment->message }}</p>
+                        
+                                @unless ($comment->type_id == null)
+                                        <div class="max-w-5xl mx-auto" >
+                                            <div class="code-container text-sm overflow-auto pb">
+                                                <x-torchlight-code class="max-w-full" language="{{ $comment->type->name }}">
+                                                    {!! $comment->code !!}
+                                                </x-torchlight-code>
+                                            </div>
+                                        </div>
+                                @endunless
+                            </div>
+                            <div class="flex justify-start mt-5">
+        
+                                <form data-comment-id="{{ $comment->id }}" class="flex justify-start likeform"
+                                    onsubmit="togglecomment(event, '{{ route('like.comment', $comment) }}', false)">
+        
+                                    @if ($comment->hasLiked($comment))
+                                        <input type=hidden name="liked" value="true">
+        
+                                        <button type="submit">
+                                            <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
+                                        </button>
+                                    @else
+                                        <input id="liked" type=hidden name="liked" value="false">
+        
+                                        <button type="submit">
+                                            <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
+                                        </button>
+                                    @endif
+        
+                                    <p class="likecounter"> {!! count($comment->likes) !!} </p>
+                                </form>
                             </div>
                         </div>
+                        </div>  
                     @endif
                 @endforeach
 

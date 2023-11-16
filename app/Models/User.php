@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Scout\Searchable;
-use App\Models\Like;
+use App\Models\LikesPost;
 
 class User extends Authenticatable
 {
@@ -71,7 +71,12 @@ class User extends Authenticatable
 
     public function likes(): HasMany
     {
-        return $this->hasmany(Like::class);
+        return $this->hasmany(LikesPost::class);
+    }
+
+    public function likescomments(): HasMany
+    {
+        return $this->hasmany(LikesComment::class);
     }
     
     public function sentMessages()

@@ -37,7 +37,7 @@ class Post extends Model
 
     public function likes(): HasMany
     {
-        return $this->hasmany(Like::class);
+        return $this->hasmany(LikesPost::class);
     }
 
     public function hasLiked(Post $postid): bool

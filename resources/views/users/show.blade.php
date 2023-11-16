@@ -91,6 +91,17 @@
                             @if ($user->pfp != null)
                                 <img class="mt-5" height="200x" width="200px"
                                     src=" {{ asset('storage/profilepicture/' . $user->id . '.' . $user->pfp) }}">
+
+                                @if (auth()->user()->userType >= 2 && $user->userType <=1)
+                                    <div class="text-center mt-1">
+                                        <a href="{{ route('profile.admindelete', ['user' => $user]) }}">
+                                            <button class="inline-flex items-center border border-transparent rounded-md font-semibold text-sm text-gray-700 uppercase tracking-widest hover:text-gray-900 active:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 mb-3">
+                                                {{ __('Deletar Imagem')}}
+                                            </button>
+                                        </a>
+                                    </div>
+                                @endif
+
                             @else
                                 <img class="my-5" height="200px" width="200px"
                                     src=" {{ asset('img/no-image.svg') }}">

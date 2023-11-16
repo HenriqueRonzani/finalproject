@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
 
 use App\Models\Admin;
-use App\Policies\AdminPolicy;
+
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -16,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        User::class => AdminPolicy::class,
+        
     ];
 
     /**
@@ -24,13 +24,12 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define("viewpage", function ($user) {
-            info($user->userType);
-            info(auth()->user()->userType);
-            info($user->userType == 3);
-            info(auth()->user()->userType == 3);
-            
+        Gate::define("isAdmin", function ($user) {
             return $user->userType == 3;
+        });
+        
+        Gate::define("hasPowers", function ($user) {
+            return $user->userType == 2 or $user->userType == 3;
         });
     }
 }

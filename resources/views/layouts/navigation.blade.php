@@ -31,7 +31,7 @@
                     </x-nav-link>   
 
                     @if (auth()->user()->userType == 3)
-                        <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
+                        <x-nav-link :href="route('admin.reported.posts')" :active="request()->routeIs('admin.index')">
                             {{ __('Admin') }}
                         </x-nav-link>   
                     @endif
@@ -71,7 +71,7 @@
                         </x-dropdown-link>
 
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form class="m-0" method="POST" action="{{ route('logout') }}">
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"

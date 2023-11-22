@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Http\Request;
 
 class Post extends Model
 {
@@ -17,6 +16,7 @@ class Post extends Model
         'message',
         'type_id',
         'title',
+        'report_count'
     ];
 
 
@@ -45,5 +45,10 @@ class Post extends Model
         $user = auth()->user();
 
         return $user->likes->contains('post_id', $postid->id);
+    }
+
+    public function reports()
+    {
+        return $this->morphMany(Report::class, 'reportable');
     }
 }

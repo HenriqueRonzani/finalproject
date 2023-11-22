@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LikesCommentController;
 use App\Http\Controllers\LikesPostController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -150,7 +151,7 @@ Route::get('directmessage/deletechat', [DirectMessageController::class, 'deletec
     ->name('chat.delete')
     ->middleware(['auth', 'verified']);
 
-    Route::resource('directmessage', DirectMessageController::class)
+Route::resource('directmessage', DirectMessageController::class)
     ->only(['index'])
     ->middleware(['auth', 'verified']);
 
@@ -161,9 +162,7 @@ Route::get('directmessage/deletechat', [DirectMessageController::class, 'deletec
 |--------------------------------------------------------------------------
 */
 
-Route::get('admin/page', [AdminController::class, 'index'])
-    ->name('admin.index')
-    ->middleware(['auth', 'verified']);
+
 
 Route::get('admin/search', [AdminController::class,'search'])
     ->name('search.search')
@@ -174,5 +173,57 @@ Route::get('admin/ban', [AdminController::class,'ban'])
     ->middleware(['auth', 'verified']);
 
 
+
+Route::get('admin/reported/posts', [AdminController::class, 'reportedPosts'])
+    ->name('admin.reported.posts')
+    ->middleware(['auth','verified']);
+
+Route::get('admin/reported/comments', [AdminController::class, 'reportedComments'])
+    ->name('admin.reported.comments')
+    ->middleware(['auth','verified']);
+
+Route::get('admin/users', [AdminController::class, 'userList'])
+    ->name('admin.users')
+    ->middleware(['auth','verified']);
+
+
+/*
+|--------------------------------------------------------------------------
+| Report Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::post('report/post/{post}', [ReportController::class, 'reportPost'])
+    ->name('report.post')
+    ->middleware(['auth', 'verified']);
     
+Route::post('report/comment/{comment}', [ReportController::class, 'reportComment'])
+    ->name('report.comment')
+    ->middleware(['auth', 'verified']);
+
+
+// Delete and Ignore Post
+
+Route::delete('report/post/delete/{post}', [ReportController::class, 'deletePost'])
+    ->name('report.delete.post')
+    ->middleware(['auth', 'verified']);
+
+Route::post('report/post/ignore/{post}', [ReportController::class, 'ignorePost'])
+    ->name('report.ignore.post')
+    ->middleware(['auth', 'verified']);
+
+
+// Delete and Ignore Comment
+
+Route::delete('report/comment/delete/{comment}', [ReportController::class, 'deleteComment'])
+    ->name('report.delete.comment')
+    ->middleware(['auth', 'verified']);
+
+Route::post('report/comment/ignore/{comment}', [ReportController::class, 'ignoreComment'])
+    ->name('report.ignore.comment')
+    ->middleware(['auth', 'verified']);
+
+
+// End Route
+
 require __DIR__.'/auth.php';

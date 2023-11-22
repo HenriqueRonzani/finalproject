@@ -1,12 +1,8 @@
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="{{asset('js/searchusers.js')}}"></script>
+
 
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="text-center font-semibold text-2xl text-gray-800 leading-tight">
-            {{ __('Área Administrativa') }}
-        </h2>
-    </x-slot>
+
+    @include('admin.redirects')
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">

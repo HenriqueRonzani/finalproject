@@ -9,9 +9,6 @@ use Illuminate\Http\Request;
 
 class DirectMessageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $user = User::find(auth()->user()->id);
@@ -45,8 +42,6 @@ class DirectMessageController extends Controller
         $user = User::find($userid);
         $receiveruser = User::find($receiverid);
 
-        //
-
         $conversations = $user->getconversationsbetweenusers($user->id, $receiverid);
 
         $createdconversation = false;
@@ -58,10 +53,6 @@ class DirectMessageController extends Controller
             Conversation::create($data);
             $createdconversation = true;
         }
-
-        //
-
-
 
         $userimage = $user->pfp ? "storage/profilepicture/" . $user->id . '.' . $user->pfp : 'img/no-image.svg';
 
@@ -140,51 +131,5 @@ class DirectMessageController extends Controller
 
         return response()->json();
     }
-    
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        // INSERT INTO `directmessage` (`id`, `message`, `sender_id`, `receiver_id`, `created_at`, `updated_at`) VALUES
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    
+        
 }

@@ -57,8 +57,8 @@
                                                 </x-dropdown-link>
                                             @endif
 
-                                            @if (auth()->user()->userType >= 2)
-                                                <form method="POST" action="{{ route('posts.destroy', $post) }}">
+                                            
+                                                <form class="m-0" method="POST" action="{{ route('posts.destroy', $post) }}">
                                                     @csrf
                                                     @method('delete')
                                                     <x-dropdown-link :href="route('posts.destroy', $post)"
@@ -66,9 +66,29 @@
                                                         {{ __('Apagar') }}
                                                     </x-dropdown-link>
                                                 </form>
-                                            @endif
                                         </x-slot>
 
+                                    </x-dropdown>
+                                @else
+                                    <x-dropdown>
+                                        <x-slot name="trigger">
+                                            <button>
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400"
+                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                    <path
+                                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                </svg>
+                                            </button>
+                                        </x-slot>
+                                        <x-slot name="content">
+                                            <form class="m-0" method="POST" action="{{ route('report.post', $post->id)}}">
+                                                @csrf
+                                                <x-dropdown-link :href="route('report.post', $post->id)"
+                                                onclick="event.preventDefault(); this.closest('form').submit(); alert('Post Denunciado')">
+                                                {{ __('Denunciar') }}
+                                                </x-dropdown-link>
+                                            </form>
+                                        </x-slot>
                                     </x-dropdown>
                                 @endif
                             </div>

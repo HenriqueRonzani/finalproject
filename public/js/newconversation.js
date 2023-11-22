@@ -29,6 +29,7 @@ function newconversation(route){
             if(panel.css('display') === 'flex'){
                 panel.css('display','none');
             }
+            
 
             $.each(users, function(index, user) {
 

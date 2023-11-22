@@ -92,6 +92,8 @@ function showchat(userid){
             if(panel.is(':hidden')){
                 panel.css('display','flex');
             }
+
+            $('#panel-redirect').attr('href', '/user/'+otheruser.id);
         },
 
         error: function(response){

@@ -86,7 +86,7 @@ function message(element, route){
             if(panel.is(':hidden')){
                 panel.css('display','flex');
             }
-            
+            $('#panel-redirect').attr('href', '/user/'+otheruser.id);
         },
         error: function (response) {
         

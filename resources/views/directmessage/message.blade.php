@@ -5,7 +5,9 @@
     <div id="panel" class="hidden bg-slate-50 h-14">
         <img id="panel-user-image" class="h-10 my-auto mx-5">        
         <div class="my-auto">
+            <a id="panel-redirect">
             <span id="panel-user-name" class="text-black text-lg"></span>
+            </a>
         </div>
     </div>
 

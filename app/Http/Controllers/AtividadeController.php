@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use App\Models\LikesComment;
+use App\Models\Like;
 use App\Models\Post;
 use Illuminate\Contracts\View\View;
-use App\Models\LikesPost;
 
 class AtividadeController extends Controller
 {   
@@ -23,12 +22,12 @@ class AtividadeController extends Controller
 
         $userid = auth()->user()->id;
         
-        $likes = LikesPost::where('user_id', $userid);
-        $likesid = $likes->pluck('post_id')->toArray();
+        $likes = Like::where('user_id', $userid)->where('likable_type', 'App\Models\Post')->get();
+        $likesid = $likes->pluck('likable_id')->toArray();
         $posts = Post::whereIn('id', $likesid)->get();
 
-        $likescomments = LikesComment::where('user_id', $userid);
-        $likescomments = $likescomments->pluck('comment_id')->toArray();
+        $likescomments = Like::where('user_id', $userid)->where('likable_type', 'App\Models\Comment')->get();
+        $likescomments = $likescomments->pluck('likable_id')->toArray();
         $comments = Comment::whereIn('id', $likescomments)->get();
 
         foreach ($comments as $comment){

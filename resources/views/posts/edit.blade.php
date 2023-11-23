@@ -19,7 +19,7 @@
             <div class="flex items-start justify-end">
 
                 <select name="type_id" class="mt-4 text-sm rounded-md focus:border-blue-500 focus:ring-blue-500 h-10" required>
-                <option selected>{{'Selecione uma linguagem'}}</option>
+                <option class="uppercase" value="{{$post->type->id}}" selected>{{__($post->type->name)}}</option>
 
                 @foreach ($category as $categories)
                     <option class="uppercase" value="{{$categories->id}}">{{$categories->name}}</option>

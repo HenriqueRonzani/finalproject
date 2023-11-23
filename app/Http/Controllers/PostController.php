@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Rules\NoLinks;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use App\Models\Type;
+use App\Models\Type;    
+use App\Rules;
 
 class PostController extends Controller
 {
@@ -36,8 +38,8 @@ class PostController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:30',
-            'message' => 'required|string',
+            'title' => ['required','string','max:30', new NoLinks],
+            'message' => ['required','string', new NoLinks],
             'type_id' => 'required|integer|exists:types,id',
         ]);
 
@@ -61,7 +63,7 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        $category = Type::all();
+        $category = Type::whereNotIn('id', [$post->type_id])->get();
 
         return view('posts.edit', [
             'post' => $post,

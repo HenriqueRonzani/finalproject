@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Type;
+use App\Rules\NoLinks;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -50,7 +51,8 @@ class CommentController extends Controller
         }
 
         $validated = $request->validate([
-            'message' => 'required|string|max:255',
+            'message' => ['required','string','max:255', new NoLinks],
+            'code' => ['required','string', new NoLinks],
         ]);
 
         $request->user()->comments()->create([
@@ -70,8 +72,11 @@ class CommentController extends Controller
     {
         $this->authorize('update', $comment);
 
+        $category = Type::whereNotIn('id', [1])->get();
+
         return view('comments.edit',[
-            'comment' => $comment
+            'comment' => $comment,
+            'category' => $category,
         ]);
         
     }
@@ -81,7 +86,8 @@ class CommentController extends Controller
         $this->authorize('update', $comment);
 
         $validated = $request->validate([
-            'message' => 'required|string|max:255'
+            'message' => ['required','string','max:255', new NoLinks],
+            'code' => ['required', 'string', new NoLinks]
         ]);
 
         $comment->update($validated);

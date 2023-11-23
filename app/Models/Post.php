@@ -34,21 +34,27 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
-
+    /*
     public function likes(): HasMany
     {
         return $this->hasmany(LikesPost::class);
     }
+    */
 
-    public function hasLiked(Post $postid): bool
+    public function hasLiked(Post $post): bool
     {
         $user = auth()->user();
 
-        return $user->likes->contains('post_id', $postid->id);
+        return $user->likes->where('likable_id', $post->id)->where('likable_type', get_class($post))->isNotEmpty();
     }
-
+    
     public function reports()
     {
         return $this->morphMany(Report::class, 'reportable');
+    }
+
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likable');
     }
 }

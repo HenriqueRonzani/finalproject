@@ -61,8 +61,9 @@ function sendmessage(event, route)
                 
                 $('.user').css('background-color','rgb(249, 250, 251)');
 
+                
                 var html = 
-                '<div data-user-id="'+receiver.id+'" class="group p-4 mr-auto flex flex-1 space-x-2 border-b border-black hover:bg-gray-50 user" onclick="message(this, '+msgroute+')">'+
+                '<div data-user-id="'+receiver.id+'" class="group p-4 mr-auto flex flex-1 space-x-2 border-b border-black bg-gray-300 hover:bg-gray-50 user" onclick="message(this, '+msgroute+')">'+
                     '<img class="my-auto h-10 w-10 rounded-md" src=" '+otheruserimage+' ">'+
                         '<div class="flex-1">'+
                             '<div class="flex justify-between items-center">'+
@@ -81,8 +82,10 @@ function sendmessage(event, route)
                     $('#addConversation').remove();
 
                     var sidebar = $('#showusers');
-                    sidebar.css('height','calc(100vh - 4.1rem)')
+                    sidebar.css('height','calc(100vh - 4.1rem)');
                 }
+
+                // showusers.css('background-color', 'rgb(209, 213 219)')
             }
 
         },

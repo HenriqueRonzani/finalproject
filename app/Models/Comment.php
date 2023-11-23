@@ -29,6 +29,7 @@ class Comment extends Model
         return $this->belongsTo(Post::class);
     }
 
+    /*
     public function likes(): HasMany
     {
         return $this->hasmany(LikesComment::class);
@@ -40,6 +41,15 @@ class Comment extends Model
 
         return $user->likescomments->contains('comment_id', $comment->id);
     }
+    */
+
+    public function hasLiked(Comment $comment): bool
+    {
+        $user = auth()->user();
+
+        return $user->likes->where('likable_id', $comment->id)->where('likable_type', get_class($comment))->isNotEmpty();
+    }
+
     public function type(): BelongsTo
     {
         return $this->belongsTo(Type::class);
@@ -47,5 +57,10 @@ class Comment extends Model
 
     public function reports(){
         return $this->morphMany(Report::class, 'reportable');
+    }
+
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likable');
     }
 }

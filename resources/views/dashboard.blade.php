@@ -115,8 +115,8 @@
 
                         <div class="flex justify-start mt-5">
 
-                            <form data-post-id="{{ $post->id }}" class="flex justify-start likeform"
-                                onsubmit="toggle(event, '{{ route('like.toggle', $post) }}')">
+                            <form data-likable="{{ 'post' }}" class="flex justify-start likeform"
+                                onsubmit="toggle(event, '{{ route('like.toggle', $post) }}', '{{route('like.remove', $post)}}')">
 
                                 @if ($post->hasLiked($post))
                                     <input type=hidden name="liked" value="true">

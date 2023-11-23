@@ -103,12 +103,12 @@ Route::resource('comments', CommentController::class)
 |--------------------------------------------------------------------------
 */
 
-Route::post('like/liketoggle/{post}', [LikesPostController::class, 'likeToggle'])
+Route::post('like/toggle/{likable}', [LikeController::class, 'likeToggle'])
     ->name('like.toggle')
     ->middleware(['auth', 'verified']);
 
-Route::post('like/likecomment/{comment}', [LikesCommentController::class, 'likeToggle'])
-    ->name('like.comment')
+Route::post('like/remove/{likable}', [LikeController::class, 'likeRemove'])
+    ->name('like.remove')
     ->middleware(['auth', 'verified']);
 
 /*

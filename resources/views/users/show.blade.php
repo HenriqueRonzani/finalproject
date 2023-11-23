@@ -158,7 +158,7 @@
                                     @endunless
                                 </div>
 
-                                @if ($post->user->is(auth()->user()))
+                                @if ($post->user->is(auth()->user()) || auth()->user()->userType >= 2)
                                     <x-dropdown>
                                         <x-slot name="trigger">
                                             <button>
@@ -170,21 +170,43 @@
                                             </button>
                                         </x-slot>
                                         <x-slot name="content">
-                                            <x-dropdown-link :href="route('posts.edit', $post)">
-                                                {{ __('Editar') }}
-                                            </x-dropdown-link>
-
-                                            <form method="POST" action="{{ route('posts.destroy', $post) }}">
-                                                @csrf
-                                                @method('delete')
-                                                <x-dropdown-link :href="route('posts.destroy', $post)"
-                                                    onclick="event.preventDefault(); this.closest('form').submit();">
-                                                    {{ __('Delete') }}
+                                            @if ($post->user->is(auth()->user()))
+                                                <x-dropdown-link :href="route('posts.edit', $post)">
+                                                    {{ __('Editar') }}
                                                 </x-dropdown-link>
-                                            </form>
-
+                                            @endif
+                                            
+                                                <form class="m-0" method="POST" action="{{ route('posts.destroy', $post) }}">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <x-dropdown-link :href="route('posts.destroy', $post)"
+                                                        onclick="event.preventDefault(); this.closest('form').submit();">
+                                                        {{ __('Apagar') }}
+                                                    </x-dropdown-link>
+                                                </form>
                                         </x-slot>
 
+                                    </x-dropdown>
+                                @else
+                                    <x-dropdown>
+                                        <x-slot name="trigger">
+                                            <button>
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400"
+                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                    <path
+                                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                </svg>
+                                            </button>
+                                        </x-slot>
+                                        <x-slot name="content">
+                                            <form class="m-0" method="POST" action="{{ route('report.post', $post->id)}}">
+                                                @csrf
+                                                <x-dropdown-link :href="route('report.post', $post->id)"
+                                                onclick="event.preventDefault(); this.closest('form').submit(); alert('Post Denunciado')">
+                                                {{ __('Denunciar') }}
+                                                </x-dropdown-link>
+                                            </form>
+                                        </x-slot>
                                     </x-dropdown>
                                 @endif
                             </div>
@@ -211,11 +233,12 @@
                         <div class="flex justify-start mt-5">
 
 
-                            <form data-post-id="{{ $post->id }}" class="flex justify-start likeform"
-                                onsubmit="toggle(event, '{{ route('like.toggle', $post) }}')">
+                            <form data-likable="{{ 'post' }}" class="flex justify-start likeform"
+                                onsubmit="toggle(event, '{{ route('like.toggle', $post) }}', '{{route('like.remove', $post)}}')">
 
                                 @if ($post->hasLiked($post))
                                     <input type=hidden name="liked" value="true">
+
 
                                     <button type="submit">
                                         <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">

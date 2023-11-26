@@ -10,11 +10,13 @@
 
     <x-slot name="header">
         <div class="flex space-x-10">
-            <img id="goBack" class="h-6" src="{{ asset('img/arrow.svg') }}">
+            <a id="back" href="">
+                <img id="goBack" class="h-6" src="{{ asset('img/arrow.svg') }}">
 
-            <h2 class=" text-center font-semibold text-2xl text-gray-800 leading-tight">
-                {{ __('Comentários') }}
-            </h2>
+                <h2 class=" text-center font-semibold text-2xl text-gray-800 leading-tight">
+                    {{ __('Comentários') }}
+                </h2>
+            </a>
         </div>
     </x-slot>
 
@@ -127,18 +129,18 @@
 
 
                         <form data-likable="{{ 'post' }}" class="flex justify-start likeform"
-                            onsubmit="toggle(event, '{{ route('like.toggle', $post) }}', '{{ route('like.remove', $post) }}')">
+                            onsubmit="toggle(event, '{{ route('like.toggle', $post) }}')">
 
                             @if ($post->hasLiked($post))
                                 <input type=hidden name="liked" value="true">
 
-                                <button type="submit">
+                                <button class="likebutton" type="submit">
                                     <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
                                 </button>
                             @else
                                 <input id="liked" type=hidden name="liked" value="false">
 
-                                <button type="submit">
+                                <button class="likebutton" type="submit">
                                     <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
                                 </button>
                             @endif
@@ -164,6 +166,7 @@
                 <textarea rows="5" name="message" placeholder="{{ __('Digite seu comentário') }}"
                     class=" mx-auto block w-3/4 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">{{ old('message') }}</textarea>
 
+                    <x-input-error :messages="$errors->get('message')" class="mt-2" />
                 <div class="mx-auto my-5 block w-3/4">
                     <input id="hascode" name="hascode" value="false" type="checkbox">
 
@@ -176,9 +179,9 @@
 
                     <textarea rows="15" name="code" placeholder="{{ __('Digite o seu código') }}"
                         class="mx-auto block w-3/4 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        spellcheck="false">{{ old('message') }}</textarea>
+                        spellcheck="false">{{ old('code') }}</textarea>
 
-                    <x-input-error :messages="$errors->get('message')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('code')" class="mt-2" />
 
                     @if ($post->type->value == 'SC')
                         <div class="flex w-5/6 items-start justify-end">
@@ -199,7 +202,7 @@
                         </div>
                     @endif
 
-                    <x-input-error :messages="$errors->get('code')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('type')" class="mt-2" />
 
                 </div>
 
@@ -220,7 +223,7 @@
 
                         </header>
 
-                        <div id="mostlikedvalue" data-most-liked="{{ $mostliked->id }}"></div>
+                        <div id="mostlikedvalue" data-most-liked="{{ $mostliked->id }}" hidden></div>
 
                         <div class="flex">
 
@@ -294,21 +297,20 @@
 
                         <div class="flex justify-start mt-5">
                             <form id="mostlikedform" 
-                                data-comment-id="{{$mostliked->id}}"
                                 data-likable="{{ 'comment' }}"
                                 class="flex justify-start likeform"
-                                onsubmit="toggle(event, '{{ route('like.toggle', $mostliked) }}', '{{ route('like.remove', $mostliked) }}')">
+                                onsubmit="toggle(event, '{{ route('like.toggle', $mostliked) }}', this)">
 
                                 @if ($mostliked->hasLiked($mostliked))
                                     <input type=hidden name="liked" value="true">
 
-                                    <button type="submit">
+                                    <button class="likebutton" type="submit">
                                         <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
                                     </button>
                                 @else
                                     <input id="liked" type=hidden name="liked" value="false">
 
-                                    <button type="submit">
+                                    <button class="likebutton" type="submit">
                                         <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
                                     </button>
                                 @endif
@@ -427,18 +429,18 @@
                         <div class="flex justify-start mt-5">
 
                                 <form data-likable="{{ 'comment' }}" class="flex justify-start likeform"
-                                onsubmit="toggle(event, '{{ route('like.toggle', $comment) }}', '{{ route('like.remove', $mostliked) }}')">
+                                onsubmit="toggle(event, '{{ route('like.toggle', $comment) }}', this)">
 
                                 @if ($comment->hasLiked($comment))
                                     <input type=hidden name="liked" value="true">
 
-                                    <button type="submit">
+                                    <button class="likebutton" type="submit">
                                         <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
                                     </button>
                                 @else
                                     <input id="liked" type=hidden name="liked" value="false">
 
-                                    <button type="submit">
+                                    <button class="likebutton" type="submit">
                                         <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
                                     </button>
                                 @endif

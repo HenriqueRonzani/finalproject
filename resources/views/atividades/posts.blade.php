@@ -93,18 +93,18 @@
 
 
                             <form data-likable="{{ 'post' }}" class="flex justify-start likeform"
-                                onsubmit="toggle(event, '{{ route('like.toggle', $post) }}' ,'{{ route('like.remove', $post) }}')">
+                                onsubmit="toggle(event, '{{ route('like.toggle', $post) }}')">
 
                                 @if ($post->hasLiked($post))
                                     <input type=hidden name="liked" value="true">
 
-                                    <button type="submit">
+                                    <button class="likebutton" type="submit">
                                         <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
                                     </button>
                                 @else
                                     <input id="liked" type=hidden name="liked" value="false">
 
-                                    <button type="submit">
+                                    <button class="likebutton" type="submit">
                                         <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
                                     </button>
                                 @endif

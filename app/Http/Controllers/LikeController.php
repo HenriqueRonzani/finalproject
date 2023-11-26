@@ -19,11 +19,23 @@ class LikeController extends Controller
 
         $likable = $likabletype == 'post' ? Post::find($likableId) : Comment::find($likableId);
 
+        $liked = $request->input('liked');
+
+        if($liked == 'true')
+        {
             $user->likes->where('likable_id', $likable->id)
                         ->where('likable_type', get_class($likable))
-                        ->each->delete();
-
+                        ->each->delete();                    
             $asset = asset('img/not-liked.svg');
+        } 
+        else
+        {
+            $user->likes()->create([
+                'likable_id' => $likable->id,
+                'likable_type' => get_class($likable)
+            ]);
+            $asset = asset('img/liked.svg');
+        }
 
         $data = [
             "count" => count($likable->likes),
@@ -33,31 +45,5 @@ class LikeController extends Controller
         
         return response()->json($data);
     }
-
-    public function likeRemove(Request $request, $likableId){
-    
-        $userid = auth()->user()->id;
-
-        $user = User::find($userid);
-        
-        $likabletype = $request->input('likable');
-
-        $likable = $likabletype == 'post' ? Post::find($likableId) : Comment::find($likableId);
-
-        $user->likes()->create([
-            'likable_id' => $likable->id,
-            'likable_type' => get_class($likable)
-        ]);
-        $asset = asset('img/liked.svg');
-
-        $data = [
-            "count" => count($likable->likes),
-            "asset" => $asset,
-            "commentId" => $likabletype == 'comment' ? $likable->id : null
-        ];
-        
-        return response()->json($data);
-    }
-
 
 }

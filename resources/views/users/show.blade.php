@@ -13,6 +13,8 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <x-app-layout>
+
+    
     <x-slot name="header">
         <h2 class="text-center font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Perfil de ') }} {!! $user->name !!}
@@ -29,6 +31,7 @@
                             <h2 class="text-3xl font-medium text-gray-900">
                                 {{ __('Informações do Usuário') }}
                             </h2>
+                            <i class="fa-solid fa-box-archive"></i>
                         </header>
 
                         <div class="mt-6 space-y-6">
@@ -234,19 +237,19 @@
 
 
                             <form data-likable="{{ 'post' }}" class="flex justify-start likeform"
-                                onsubmit="toggle(event, '{{ route('like.toggle', $post) }}', '{{route('like.remove', $post)}}')">
+                                onsubmit="toggle(event, '{{ route('like.toggle', $post) }}')">
 
                                 @if ($post->hasLiked($post))
                                     <input type=hidden name="liked" value="true">
 
 
-                                    <button type="submit">
+                                    <button class="likebutton" type="submit">
                                         <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
                                     </button>
                                 @else
                                     <input id="liked" type=hidden name="liked" value="false">
 
-                                    <button type="submit">
+                                    <button class="likebutton" type="submit">
                                         <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
                                     </button>
                                 @endif

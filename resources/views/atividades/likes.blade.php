@@ -119,18 +119,18 @@
 
 
                                 <form data-likable="{{ 'post' }}" class="flex justify-start likeform"
-                                    onsubmit="toggle(event, '{{ route('like.toggle', $postorcomment) }}' ,'{{ route('like.remove', $postorcomment) }}')">
+                                    onsubmit="toggle(event, '{{ route('like.toggle', $postorcomment) }}')">
 
                                     @if ($postorcomment->hasLiked($postorcomment))
                                         <input type=hidden name="liked" value="true">
 
-                                        <button type="submit">
+                                        <button class="likebutton" type="submit">
                                             <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
                                         </button>
                                     @else
                                         <input id="liked" type=hidden name="liked" value="false">
 
-                                        <button type="submit">
+                                        <button class="likebutton" type="submit">
                                             <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
                                         </button>
                                     @endif
@@ -255,18 +255,18 @@
 
                                     <form data-likable="{{ 'post' }}"
                                         class="flex justify-start likeform"
-                                        onsubmit="toggle(event, '{{ route('like.toggle', $postorcomment->post) }}', '{{ route('like.remove', $postorcomment->post) }}')">
+                                        onsubmit="toggle(event, '{{ route('like.toggle', $postorcomment->post) }}')">
 
                                         @if ($postorcomment->post->hasLiked($postorcomment->post))
                                             <input type=hidden name="liked" value="true">
 
-                                            <button type="submit">
+                                            <button class="likebutton" type="submit">
                                                 <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
                                             </button>
                                         @else
                                             <input id="liked" type=hidden name="liked" value="false">
 
-                                            <button type="submit">
+                                            <button class="likebutton" type="submit">
                                                 <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
                                             </button>
                                         @endif
@@ -376,18 +376,18 @@
                                     <div class="flex justify-start mt-5">
                     
                                         <form data-likable="{{ 'comment' }}" class="flex justify-start likeform"
-                                            onsubmit="toggle(event, '{{ route('like.toggle', $postorcomment) }}','{{ route('like.remove', $postorcomment) }}')">
+                                            onsubmit="toggle(event, '{{ route('like.toggle', $postorcomment) }}')">
                     
                                             @if ($postorcomment->hasLiked($postorcomment))
                                                 <input type=hidden name="liked" value="true">
                     
-                                                <button type="submit">
+                                                <button class="likebutton" type="submit">
                                                     <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
                                                 </button>
                                             @else
                                                 <input id="liked" type=hidden name="liked" value="false">
                     
-                                                <button type="submit">
+                                                <button class="likebutton" type="submit">
                                                     <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
                                                 </button>
                                             @endif

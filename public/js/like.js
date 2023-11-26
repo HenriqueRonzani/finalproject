@@ -1,40 +1,45 @@
 
 
-function toggle(event, route1, route2){
+function toggle(event, route){
     event.preventDefault();
-
-    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    
     var form = $(event.target);
     
+    var button = form.find('.likebutton');
+
+    button.prop('disabled', true);
+
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
     var image = form.find('.likeimage');
+
     var likedinput = form.find('input[name="liked"]');
     var liked = likedinput.val();
 
     var likable = form.data('likable');
-
-    var route = liked !== "true" ? route2 : route1;
-
-    likedinput.val(liked === "true" ? "false" : "true");
     
     $.ajax({
         url: route,
         type: "POST",
         data: {
             _token: csrfToken,
-            likable: likable
+            likable: likable,
+            liked: liked
         },
         dataType: 'json',
         
         success: function(response){
 
-            var count = response.count;
+            likedinput.val(liked === "true" ? "false" : "true");
+
             var imageSrc = response.asset;
+            var count = response.count;
 
             form.find('.likecounter').html(count);
             image.attr('src', imageSrc);
 
 
-            if (likable == "comment" && $('#mostlikedform').data('comment-id') == response.commentId)
+            if (likable == "comment" && $('#mostlikedvalue').data('most-liked') == response.commentId)
             {
                 otherform = form.attr('id') == 'mostlikedform' ? $('#mostliked') : $('#mostlikedform');
             
@@ -44,9 +49,11 @@ function toggle(event, route1, route2){
             }
         },
         error: function(response){
-            likedinput.val(liked === "true" ? "false" : "true");
             alert('Error');
-            
+        },
+
+        complete: function(){
+            $(button).prop('disabled', false);
         }
     });
 }

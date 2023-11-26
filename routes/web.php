@@ -107,10 +107,6 @@ Route::post('like/toggle/{likable}', [LikeController::class, 'likeToggle'])
     ->name('like.toggle')
     ->middleware(['auth', 'verified']);
 
-Route::post('like/remove/{likable}', [LikeController::class, 'likeRemove'])
-    ->name('like.remove')
-    ->middleware(['auth', 'verified']);
-
 /*
 |--------------------------------------------------------------------------
 | Atividades Routes

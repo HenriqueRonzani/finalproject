@@ -39,7 +39,7 @@ class PostController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required','string','max:30', new NoLinks],
-            'message' => ['required','string', new NoLinks],
+            'message' => ['required','string'],
             'type_id' => 'required|integer|exists:types,id',
         ]);
 

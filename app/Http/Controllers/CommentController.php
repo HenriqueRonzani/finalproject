@@ -8,7 +8,7 @@ use App\Models\Type;
 use App\Rules\NoLinks;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class CommentController extends Controller
@@ -52,7 +52,7 @@ class CommentController extends Controller
 
         $validated = $request->validate([
             'message' => ['required','string','max:255', new NoLinks],
-            'code' => ['required','string', new NoLinks],
+            'code' => [new NoLinks],
         ]);
 
         $request->user()->comments()->create([
@@ -87,7 +87,6 @@ class CommentController extends Controller
 
         $validated = $request->validate([
             'message' => ['required','string','max:255', new NoLinks],
-            'code' => ['required', 'string', new NoLinks]
         ]);
 
         $comment->update($validated);

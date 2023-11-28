@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="{{ asset('js/changecodetype.js') }}"></script>
 <x-app-layout>
         <x-slot name="header">
             <h2 class="text-center font-semibold text-2xl text-gray-800 leading-tight">
@@ -8,14 +10,19 @@
         <form method="POST" action="{{ route('posts.store') }}">
             @csrf
 
-            <x-text-input name="title" class="block mt-1 w-full mb-2" placeholder="Digite sua dúvida, informação ou contribuição" required />
+            <x-text-input name="title" class="block mt-1 w-full mb-5" placeholder="Digite sua dúvida, informação ou contribuição" required />
             <x-input-error :messages="$errors->get('title')" class="mb-3" />
 
+                <label class="text-2xl text-gray-800 font-semibold" for="code">
+                    {{((__('Código ou dúvida')))}}
+                </label>
+                
             <textarea
+                id="code"
                 rows="15"
                 name="message"
                 placeholder="{{ __('Digite o seu código ou dúvida') }}"
-                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                class="block w-full bg-gray-200 text-gray-800 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                 spellcheck="false"
                 required
                 >{{ old('message') }}</textarea>
@@ -24,7 +31,7 @@
 
             <div class="flex items-start justify-end">
 
-                <select name="type_id" class="mt-4 text-sm rounded-md focus:border-blue-500 focus:ring-blue-500 h-10" required>
+                <select id="types" name="type_id" class="mt-4 text-sm rounded-md focus:border-blue-500 focus:ring-blue-500 h-10" required>
 
                 @foreach ($category as $categories)
              

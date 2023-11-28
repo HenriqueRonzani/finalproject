@@ -27,6 +27,11 @@ class CommentController extends Controller
 
         $category = Type::whereNotIn('id', [1])->get();
 
+        if(strpos(url()->previous(), 'comments?post=') === false){
+            
+            session(['previous-comment-back' => url()->previous()]);
+        }
+
         return view('comments.index', [
             'post' => $post,
             'comments' => $comment,
@@ -40,6 +45,7 @@ class CommentController extends Controller
         $post = $request->get('post');
     
         $post = Post::find($post);
+
         
         if ($request->get('code') != ''){
             $codetype = $post->type_id == 1 ? $request->get("type_id") : $post->type_id;
@@ -64,7 +70,7 @@ class CommentController extends Controller
 
 
         return redirect(route('comments.index', [
-            'post' => $post
+            'post' => $post,
         ]));
     }
     

@@ -1,4 +1,3 @@
-<div id="previousurl" data-previous-url="" hidden></div>
 <link rel="stylesheet" href="{{ asset('css/my.css') }}">
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
@@ -46,7 +45,7 @@
                         {{ __('Mensagem Direta') }}
                     </x-nav-link>   
 
-                    @if (auth()->user()->userType == 3)
+                    @if (auth()->user()->userType >= 2)
                         <x-nav-link :href="route('admin.reported.posts')" :active="request()->routeIs('admin.index')">
                             <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                 <!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -87,7 +86,12 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Perfil') }}
+                            <div class="flex">
+                                <svg class="mr-2 my-auto w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                    <!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                    <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+                                {{ __('Perfil') }}
+                            </div>
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -97,7 +101,13 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Sair') }}
+                                <div class="flex">
+                                    <svg class="mr-2 my-auto w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <path d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 192 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128zM160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0z"/>
+                                    </svg>
+                                    {{ __('Sair') }}
+                                </div>
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -120,11 +130,22 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Início') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
-                {{ __('Posts') }}
+                {{ __('Criar Posts') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('atividades.posts')" :active="request()->routeIs('atividades.posts')">
+                {{ __('Minha Atividade') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('directmessage.index')" :active="request()->routeIs('directmessage.index')">
+                {{ __('Mensagem Direta') }}
+            </x-responsive-nav-link>
+            @if (auth()->user()->userType >=2)
+                <x-responsive-nav-link :href="route('admin.reported.posts')" :active="request()->routeIs('admin.reported.posts')">
+                    {{ __('Admin') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

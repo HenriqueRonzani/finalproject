@@ -10,7 +10,7 @@
     
     @include('atividades.redirects')
 
-    @foreach ($posts as $post)
+    @forelse ($posts as $post)
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
@@ -28,7 +28,10 @@
                     <div class="flex-1 px-2">
                         <div class="flex justify-between items-center">
                             <div>
-                                <span class="text-gray-800">{{ $post->user->name }}</span>
+                                <a href="{{ route('user.show', ['user' => $post->user]) }}">
+                                    <span
+                                        class="text-gray-500 hover:text-gray-950 hover:border-b-2">{{ $post->user->name }}</span>
+                                </a>
                                 <small class="ml-2 text-sm text-gray-600">{{ $post->created_at->format('d/m/y, H:i') }}</small>
                                 @unless ($post->created_at->eq($post->updated_at))
                                 <small class="text-sm text-gray-600"> &middot; {{ __('editado') }}</small>
@@ -159,7 +162,10 @@
                             <div class="flex-1">
                                 <div class="flex justify-between items-center">
                                     <div>
-                                        <span class="text-gray-800">{{ $comment->user->name }}</span>
+                                        <a href="{{ route('user.show', ['user' => $comment->user]) }}">
+                                            <span
+                                                class="text-gray-500 hover:text-gray-950 hover:border-b-2">{{ $comment->user->name }}</span>
+                                        </a>
                                         <small class="ml-2 text-sm text-gray-600">{{ $comment->created_at->format('d/m/y, H:i') }}</small>
                                     </div>
             
@@ -242,13 +248,13 @@
                                         <input type=hidden name="liked" value="true">
         
                                         <button class="likebutton" type="submit">
-                                            <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
+                                            <img class="likeimage mx-2 w-5" src="{{ asset('img/liked.svg') }}">
                                         </button>
                                     @else
                                         <input id="liked" type=hidden name="liked" value="false">
         
                                         <button class="likebutton" type="submit">
-                                            <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
+                                            <img class="likeimage mx-2 w-5" src="{{ asset('img/not-liked.svg') }}">
                                         </button>
                                     @endif
         
@@ -261,6 +267,14 @@
             @endforeach
         </div>
     </div>
-    @endforeach
+    @empty
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                <div class="p-6 flex space-x-2">
+                    <h2 class="align center mx-auto text-gray-500"> {{ __('Seus comentários aparecerão aqui') }}
+                </div>
+            </div>
+        </div>
+    @endforelse
 
 </x-app-layout> 

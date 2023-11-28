@@ -29,20 +29,6 @@ class Comment extends Model
         return $this->belongsTo(Post::class);
     }
 
-    /*
-    public function likes(): HasMany
-    {
-        return $this->hasmany(LikesComment::class);
-    }
-
-    public function hasLiked(Comment $comment): bool
-    {
-        $user = auth()->user();
-
-        return $user->likescomments->contains('comment_id', $comment->id);
-    }
-    */
-
     public function hasLiked(Comment $comment): bool
     {
         $user = auth()->user();

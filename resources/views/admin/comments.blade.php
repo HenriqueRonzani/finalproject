@@ -22,7 +22,10 @@
                         <div class="flex-1 px-2">
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="text-gray-800">{{ $report->post->user->name }}</span>
+                                    <a href="{{ route('user.show', ['user' => $report->post->user]) }}">
+                                        <span
+                                            class="text-gray-500 hover:text-gray-950 hover:border-b-2">{{ $report->post->user->name }}</span>
+                                    </a>
                                     <small
                                         class="ml-2 text-sm text-gray-600">{{ $report->post->created_at->format('d/m/y, H:i') }}</small>
                                     @unless ($report->post->created_at->eq($report->post->updated_at))
@@ -63,7 +66,10 @@
                     <div class="flex-1">
                         <div class="flex justify-between items-center">
                             <div>
-                                <span class="text-gray-800">{{ $report->user->name }}</span>
+                                <a href="{{ route('user.show', ['user' => $report->user]) }}">
+                                    <span
+                                        class="text-gray-500 hover:text-gray-950 hover:border-b-2">{{ $report->user->name }}</span>
+                                </a>
                                 <small
                                     class="ml-2 text-sm text-gray-600">{{ $report->created_at->format('d/m/y, H:i') }}</small>
                             </div>

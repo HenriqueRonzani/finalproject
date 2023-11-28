@@ -17,7 +17,17 @@
             <div class="flex-shrink-0">     
 
                 @if (!$hasAllConversations)
-                    <div cursor id="addConversation" class="bg-blue-500 w-full text-center py-5 border border-black text-white text-xl hover:bg-blue-600 hover:text-gray-200 cursor-pointer" onclick="newconversation('{{ route('message.new') }}')">+ Conversa</div>
+                    <div cursor id="addConversation" class="bg-blue-500 w-full text-center py-5 border border-black text-white text-xl hover:bg-blue-600 hover:text-gray-200 cursor-pointer" onclick="newconversation('{{ route('message.new') }}')">
+                        <div class="max-w-fit mx-auto flex">
+                            <svg class="w-7 h-7 my-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor"> 
+                                <!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/>
+                            </svg>
+                            <h2 class="ml-3 text-2xl">
+                                {{__('Adicionar conversa')}}
+                            </h2>
+                        </div>
+                    </div>
                     <nav id="showusers" style="height: calc(100vh - 8.4rem);" class=" bg-gray-100 w-80 overflow-auto">
                 @else   
                     <nav id="showusers" style="height: calc(100vh - 4.1rem);" class=" bg-gray-100 w-80 overflow-auto">

@@ -9,7 +9,7 @@
 
     @include('atividades.redirects')
 
-            @foreach ($postsandcomments as $postorcomment)
+            @forelse ($postsandcomments as $postorcomment)
 
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
@@ -168,7 +168,10 @@
                                 <div class="flex-1 px-2">
                                     <div class="flex justify-between items-center">
                                         <div>
-                                            <span class="text-gray-800">{{ $postorcomment->post->user->name }}</span>
+                                            <a href="{{ route('user.show', ['user' => $postorcomment->post->user]) }}">
+                                                <span
+                                                    class="text-gray-500 hover:text-gray-950 hover:border-b-2">{{ $postorcomment->post->user->name }}</span>
+                                            </a>
                                             <small
                                                 class="ml-2 text-sm text-gray-600">{{ $postorcomment->post->created_at->format('d/m/y, H:i') }}</small>
                                             @unless ($postorcomment->post->created_at->eq($postorcomment->post->updated_at))
@@ -299,7 +302,10 @@
                                 <div class="flex-1">
                                     <div class="flex justify-between items-center">
                                         <div>
-                                            <span class="text-gray-800">{{ $postorcomment->user->name }}</span>
+                                            <a href="{{ route('user.show', ['user' => $postorcomment->user]) }}">
+                                                <span
+                                                    class="text-gray-500 hover:text-gray-950 hover:border-b-2">{{ $postorcomment->user->name }}</span>
+                                            </a>
                                             <small
                                                 class="ml-2 text-sm text-gray-600">{{ $postorcomment->created_at->format('d/m/y, H:i') }}</small>
                                         </div>
@@ -382,13 +388,13 @@
                                                 <input type=hidden name="liked" value="true">
                     
                                                 <button class="likebutton" type="submit">
-                                                    <img class="likeimage mx-2 w-7" src="{{ asset('img/liked.svg') }}">
+                                                    <img class="likeimage mx-2 w-5" src="{{ asset('img/liked.svg') }}">
                                                 </button>
                                             @else
                                                 <input id="liked" type=hidden name="liked" value="false">
                     
                                                 <button class="likebutton" type="submit">
-                                                    <img class="likeimage mx-2 w-7" src="{{ asset('img/not-liked.svg') }}">
+                                                    <img class="likeimage mx-2 w-5" src="{{ asset('img/not-liked.svg') }}">
                                                 </button>
                                             @endif
                     
@@ -407,7 +413,15 @@
                 </div>
             </div>
 
-            @endforeach
+            @empty
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                    <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                        <div class="p-6 flex space-x-2">
+                            <h2 class="align center mx-auto text-gray-500"> {{ __('Suas curtidas aparecerão aqui') }}
+                        </div>
+                    </div>
+                </div>
+            @endforelse
         </div>
     </div>
 

@@ -53,8 +53,10 @@ function message(element, route){
                 } else {
                     html = 
                         '<div class="showmessages p-3 m-2">'+
-                            '<div class="flex items-end justify-start">' +                        
+                            '<div class="flex items-end justify-start">' +   
+                                '<a href="/user/'+otheruser.id+'">'+                     
                                 '<img class="h-10 w-10 rounded-md mr-1 my-auto" src=" '+ otheruserimage +'">' +
+                                '</a>'+
                                 '<p style="max-width: 60%; word-wrap: break-word;" class="p-2 text-lg bg-white rounded-md">' + message.message + '</p>' +
                             '</div>'+
                             '<div class="flex items-end justify-start">'+

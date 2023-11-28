@@ -12,7 +12,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
-            @foreach ($posts as $post)
+            @forelse ($posts as $post)
                 <div class="p-6 flex-1 space-x-2">
 
                     <div class="flex">
@@ -124,7 +124,15 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                    <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                        <div class="p-6 flex space-x-2">
+                            <h2 class="align center mx-auto text-gray-500"> {{ __('Seus posts aparecerão aqui') }}
+                        </div>
+                    </div>
+                </div>
+            @endforelse
         </div>
     </div>
 

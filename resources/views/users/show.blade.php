@@ -60,10 +60,11 @@
 
                         @unless ($user->is(auth()->user()))
                             <div class="mb-5 flex-grow flex items-end justify-start">
-                                <button class="p-2 bg-blue-300 rounded-md text-gray-900"
-                                    onclick="redirectto({{ $user->id }})">{{ __('Iniciar conversa com ' . $user->name) }}
-                                </button>
-
+                                @unless($user->bannedUntil && now()->lessThan($user->bannedUntil))
+                                    <button class="p-2 bg-blue-300 rounded-md text-gray-900"
+                                        onclick="redirectto({{ $user->id }})">{{ __('Iniciar conversa com ' . $user->name) }}
+                                    </button>
+                                @endunless
                                 @if(auth()->user()->userType == 3 && !($user->bannedUntil && now()->isBefore($user->bannedUntil)))
                                     <div class="ml-10 flex">
                                         <div class="flex-col items-end justify-end mr-2">                                 

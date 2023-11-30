@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="{{ asset('js/changecodetype.js') }}"></script>
 
 <x-app-layout>
     <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
@@ -8,17 +10,22 @@
             <x-input-error :messages="$errors->get('title')" class="mb-3" />
 
             <textarea
+                id="code"
                 rows="15"
                 name="message"
                 placeholder="{{ __('Digite o seu código') }}"
-                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                @if ($post->type->id != 1)
+                    class="block w-full bg-gray-950 text-gray-300 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                @else 
+                    class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                @endif
             >{{ old('message', $post->message) }}</textarea>
 
             <x-input-error :messages="$errors->get('message')" class="mt-2" />
 
             <div class="flex items-start justify-end">
 
-                <select name="type_id" class="mt-4 text-sm rounded-md focus:border-blue-500 focus:ring-blue-500 h-10" required>
+                <select id="types" name="type_id" class="mt-4 text-sm rounded-md focus:border-blue-500 focus:ring-blue-500 h-10" required>
                 <option class="uppercase" value="{{$post->type->id}}" selected>{{__($post->type->name)}}</option>
 
                 @foreach ($category as $categories)

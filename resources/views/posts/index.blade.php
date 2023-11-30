@@ -13,9 +13,6 @@
             <x-text-input name="title" class="block mt-1 w-full mb-5" placeholder="Digite sua dúvida, informação ou contribuição" required />
             <x-input-error :messages="$errors->get('title')" class="mb-3" />
 
-                <label class="text-2xl text-gray-800 font-semibold" for="code">
-                    {{((__('Código ou dúvida')))}}
-                </label>
                 
             <textarea
                 id="code"

@@ -42,7 +42,11 @@
                 </label>
                 
                 <textarea rows="15" name="code" id="code" placeholder="{{ __('Digite o seu código') }}"
-                class="mt-2 mx-auto block w-3/4 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                @if($comment->type_id == 1)
+                    class="mt-2 mx-auto block w-3/4 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                @else
+                    class="mt-2 mx-auto block w-3/4 bg-gray-950 text-gray-300 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                @endif
                 spellcheck="false">{{ old('code', $comment->code) }}</textarea>
             
                 <x-input-error :messages="$errors->get('code')" class="mt-2" />

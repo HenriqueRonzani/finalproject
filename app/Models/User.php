@@ -116,7 +116,7 @@ class User extends Authenticatable
 
         $userIds = $conversations->pluck('user1_id')->merge($conversations->pluck('user2_id'))->unique();
 
-        return User::whereNotIn('id', $userIds)->where('id', '!=', $this->id)->get();
+        return User::whereNotIn('id', $userIds)->where('id', '!=', $this->id)->orderBy('name')->get();
     }
 
     public function getconversationsbetweenusers($user1Id, $user2Id)

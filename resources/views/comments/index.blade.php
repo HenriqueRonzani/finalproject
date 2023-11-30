@@ -179,15 +179,15 @@
 
                 <div id="codecomment" hidden>
 
-                    <textarea rows="15" name="code" placeholder="{{ __('Digite o seu código') }}"
-                        class="mx-auto block w-3/4 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    <textarea id="code" rows="15" name="code" placeholder="{{ __('Digite o seu código') }}"
+                        class="mx-auto block w-3/4 bg-gray-950 text-gray-300 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         spellcheck="false">{{ old('code') }}</textarea>
 
                     <x-input-error :messages="$errors->get('code')" class="mt-2" />
 
                     @if ($post->type->value == 'SC')
                         <div class="flex w-5/6 items-start justify-end">
-                            <select name="type_id"
+                            <select name="type_id" id="select"
                                 class=" mt-4 text-sm rounded-md focus:border-blue-500 focus:ring-blue-500 h-10">
 
                                 @foreach ($category as $categories)
@@ -325,7 +325,7 @@
             @endunless
         </div>
     </div>
-        @foreach ($comments as $comment)
+        @forelse ($comments as $comment)
             <div class="max-w-6xl mx-auto mt-4">
                 <div class="bg-white shadow-sm rounded-lg divide-y">
 
@@ -457,5 +457,13 @@
                     </div>
                 </div>
             </div>
-    @endforeach
+    @empty
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                <div class="p-10 flex space-x-2">
+                    <h2 class="align center mx-auto text-gray-500"> {{ __('Comentários aparecerão aqui') }}
+                </div>
+            </div>
+        </div>
+    @endforelse
 </x-app-layout>

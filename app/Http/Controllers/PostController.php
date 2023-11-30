@@ -38,7 +38,7 @@ class PostController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'title' => ['required','string','max:30', new NoLinks],
+            'title' => ['required','string','max:100', new NoLinks],
             'message' => ['required','string'],
             'type_id' => 'required|integer|exists:types,id',
         ]);
@@ -79,7 +79,7 @@ class PostController extends Controller
         $this->authorize('update', $post);
 
         $validated = $request->validate([
-            'title' => 'required|string|max:30',
+            'title' => 'required|string|max:100',
             'message' => 'required|string',
             'type_id' => 'required|integer|exists:types,id',
         ]);

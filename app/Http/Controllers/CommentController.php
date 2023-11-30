@@ -91,9 +91,17 @@ class CommentController extends Controller
     {
         $this->authorize('update', $comment);
 
-        $validated = $request->validate([
-            'message' => ['required','string','max:255', new NoLinks],
-        ]);
+        if($comment->type && $comment->type->id != null){
+            $validated = $request->validate([
+                'message' => ['required','string','max:255', new NoLinks],
+                'code' => ['string', new Nolinks]
+            ]);
+        }
+        else{
+            $validated = $request->validate([
+                'message' => ['required','string','max:255', new NoLinks],
+            ]);
+        }
 
         $comment->update($validated);
 
